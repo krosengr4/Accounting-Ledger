@@ -35,7 +35,35 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
                 "\nEnter \"P\" to make a payment(debit). \nEnter \"L\" to display ledger screen. " +
                 "\nEnter \"X\" to exit the application. ").toUpperCase();
 
-        System.out.println(userChoice);
+        switch (userChoice) {
+            case "D":
+                addDeposit();
+                break;
+            case "P":
+                makePayment();
+                break;
+            case "L":
+                ledgerScreen();
+                break;
+            case "X":
+                System.out.println("Thank you for using the Accounting Ledger! \n \tSee you again soon :)");
+                break;
+            default:
+                throw new IllegalStateException("Please enter one of the 4 letters listed!");
+        }
+
+    }
+
+    private static void addDeposit() {
+        System.out.println("Add a deposit");
+    }
+
+    private static void makePayment() {
+        System.out.println("Make a payment");
+    }
+
+    private static void ledgerScreen() {
+        System.out.println("Ledger screen");
     }
 
 }
