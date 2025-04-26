@@ -18,11 +18,11 @@ public class Ledger {
 
             // call correct method that follows users action input
             if (userChoice.equalsIgnoreCase("A")) {
-                System.out.println("Display all entries");
+                displayEntries();
             } else if (userChoice.equalsIgnoreCase("D")) {
-                System.out.println("Display deposits");
+                displayDeposits();
             } else if (userChoice.equalsIgnoreCase("P")) {
-                System.out.println("Display payments");
+                displayPayments();
             } else if (userChoice.equalsIgnoreCase("R")) {
                 Reports.displayReportsScreen();
             } else if (userChoice.equalsIgnoreCase("H")) {
@@ -32,5 +32,20 @@ public class Ledger {
                 System.err.println("ERROR! Please enter one of the letters listed");
             }
         }
+    }
+
+    //!Change void to a return type (either hashmap or array list)
+    public static void displayEntries() {
+        System.out.println("Display all entries");
+    }
+
+    //!Change void to a return type (either hashmap or array list)\
+    public static void displayDeposits() {
+        System.out.println("Display deposits only");
+    }
+
+    //!Change void to a return type (either hashmap or array list)
+    public static void displayPayments() {
+        System.out.println("Display payments only");
     }
 }
