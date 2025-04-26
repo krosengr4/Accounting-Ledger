@@ -11,10 +11,12 @@ public class Ledger {
         String userChoice;
 
         while (true) {
+            //Get user input
             System.out.println("\n\t-----LEDGER-----");
             System.out.println("OPTIONS: \nA - Display all entries \nD - Display deposits \nP - Display payments \nR - Go to Reports Screen \nH - Return to Home Screen");
             userChoice = Utils.promptGetUserInput("What would you like to do?: ");
 
+            // call correct method that follows users action input
             if (userChoice.equalsIgnoreCase("A")) {
                 System.out.println("Display all entries");
             } else if (userChoice.equalsIgnoreCase("D")) {

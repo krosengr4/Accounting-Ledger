@@ -24,43 +24,37 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
     public static void main(String[] args) {
         System.out.println("\t----------WELCOME TO THE ACCOUNTING LEDGER!----------");
 
-        homeScreen();
-    }
-
-    //Displays home screen
-    private static void homeScreen() {
-
         String userChoice;
 
-        //Get user action input
-        System.out.println("\n\t-----MAIN MENU-----");
-        System.out.println("Enter the letter associated with the desired action\nD - Add a deposit \nP - Make a payment(debit) \nL - Go to Ledger Screen \nX - Exit the Ledger Application");
-        userChoice = Utils.promptGetUserInput("What would you like to do?: ").toUpperCase();
+        while(true) {
+            //Get user action input
+            System.out.println("\n\t-----MAIN MENU-----");
+            System.out.println("Enter the letter associated with the desired action\nD - Add a deposit \nP - Make a payment(debit) \nL - Go to Ledger Screen \nX - Exit the Ledger Application");
+            userChoice = Utils.promptGetUserInput("What would you like to do?: ");
 
-        // call correct method that follows users action input
-        switch (userChoice) {
-            case "D":
+            // call correct method that follows users action input
+            if (userChoice.equalsIgnoreCase("D")) {
                 addDeposit();
-                break;
-            case "P":
+            } else if (userChoice.equalsIgnoreCase("P")) {
                 makePayment();
-                break;
-            case "L":
+            } else if (userChoice.equalsIgnoreCase("L")) {
                 Ledger.displayLedgerScreen();
-                break;
-            case "X":
+            } else if (userChoice.equalsIgnoreCase("X")) {
                 System.out.println("Thank you for using the Accounting Ledger! \n \tSee you soon :)");
                 break;
-            default:
-                throw new IllegalStateException("Please enter one of the letters listed!");
+            } else {
+                System.err.println("ERROR! Please enter one of the letters listed");
+            }
         }
     }
 
     private static void addDeposit() {
+        //To add deposit well need file writer
         System.out.println("Add a deposit");
     }
 
     private static void makePayment() {
+        //To add a payment well need file writer
         System.out.println("Make a payment");
     }
 
