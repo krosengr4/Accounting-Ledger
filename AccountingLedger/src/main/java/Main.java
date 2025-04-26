@@ -25,16 +25,17 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
         System.out.println("----------WELCOME TO THE ACCOUNTING LEDGER!----------");
 
         homeScreen();
-
-
     }
 
     //Displays home screen
     private static void homeScreen() {
-        String userChoice = Utils.promptAndGetUserInput("What would you like to do?: \nEnter \"D\" to add a deposit. " +
+
+        //Get user action input
+        String userChoice = Utils.promptGetUserInput("What would you like to do?: \nEnter \"D\" to add a deposit. " +
                 "\nEnter \"P\" to make a payment(debit). \nEnter \"L\" to display ledger screen. " +
                 "\nEnter \"X\" to exit the application. ").toUpperCase();
 
+        // call correct method that follows users action input
         switch (userChoice) {
             case "D":
                 addDeposit();
@@ -51,7 +52,6 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
             default:
                 throw new IllegalStateException("Please enter one of the 4 letters listed!");
         }
-
     }
 
     private static void addDeposit() {
