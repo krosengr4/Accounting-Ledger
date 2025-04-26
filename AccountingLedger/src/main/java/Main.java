@@ -35,8 +35,10 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
             // call correct method that follows users action input
             if (userChoice.equalsIgnoreCase("D")) {
                 addDeposit();
+                //This will need to pass an argument
             } else if (userChoice.equalsIgnoreCase("P")) {
                 makePayment();
+                //This will need to pass an argument
             } else if (userChoice.equalsIgnoreCase("L")) {
                 Ledger.displayLedgerScreen();
             } else if (userChoice.equalsIgnoreCase("X")) {
@@ -48,10 +50,13 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
         }
     }
 
+    //! This will need to take in a parameter
     private static void addDeposit() {
         //To add deposit well need file writer
         System.out.println("Add a deposit");
     }
+
+    //! This will need to take in a parameter
 
     private static void makePayment() {
         //To add a payment well need file writer
