@@ -44,7 +44,7 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
                 makePayment();
                 break;
             case "L":
-                ledgerScreen();
+                Ledger.displayLedgerScreen();
                 break;
             case "X":
                 System.out.println("Thank you for using the Accounting Ledger! \n \tSee you again soon :)");
@@ -60,16 +60,6 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
 
     private static void makePayment() {
         System.out.println("Make a payment");
-    }
-
-    private static void ledgerScreen() {
-        /*
-        A) All - Display all entries
-        D) Deposits - Display only the entries that are deposits into the account
-        P) Payments - Display only the negative entries (or payments)
-        R) Reports - A new screen that allows the user to run pre-defined reports or to run a custom search:
-         */
-        System.out.println("Ledger screen");
     }
 
     private static void reportsScreen() {
