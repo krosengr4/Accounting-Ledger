@@ -22,7 +22,7 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
      */
 
     public static void main(String[] args) {
-        System.out.println("----------WELCOME TO THE ACCOUNTING LEDGER!----------");
+        System.out.println("\t----------WELCOME TO THE ACCOUNTING LEDGER!----------");
 
         homeScreen();
     }
@@ -30,10 +30,12 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
     //Displays home screen
     private static void homeScreen() {
 
+        String userChoice;
+
         //Get user action input
-        String userChoice = Utils.promptGetUserInput("What would you like to do?: \nEnter \"D\" to add a deposit. " +
-                "\nEnter \"P\" to make a payment(debit). \nEnter \"L\" to display ledger screen. " +
-                "\nEnter \"X\" to exit the application. ").toUpperCase();
+        System.out.println("\n\t-----MAIN MENU-----");
+        System.out.println("Enter the letter associated with the desired action\nD - Add a deposit \nP - Make a payment(debit) \nL - Go to Ledger Screen \nX - Exit the Ledger Application");
+        userChoice = Utils.promptGetUserInput("What would you like to do?: ").toUpperCase();
 
         // call correct method that follows users action input
         switch (userChoice) {
@@ -47,10 +49,10 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
                 Ledger.displayLedgerScreen();
                 break;
             case "X":
-                System.out.println("Thank you for using the Accounting Ledger! \n \tSee you again soon :)");
+                System.out.println("Thank you for using the Accounting Ledger! \n \tSee you soon :)");
                 break;
             default:
-                throw new IllegalStateException("Please enter one of the 4 letters listed!");
+                throw new IllegalStateException("Please enter one of the letters listed!");
         }
     }
 
@@ -60,19 +62,6 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
 
     private static void makePayment() {
         System.out.println("Make a payment");
-    }
-
-    private static void reportsScreen() {
-        /*
-        1) Month To Date
-        2) Previous Month
-        3) Year To Date
-        4) Previous Year
-        5) Search by Vendor - prompt the user for the vendor name and display all entries for that vendor
-        0) Back - go back to the report page
-        H) Home - go back to the home page
-         */
-        System.out.println("Reports Screen");
     }
 
 }
