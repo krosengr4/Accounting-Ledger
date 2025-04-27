@@ -21,6 +21,8 @@ public class Reports {
                     "\n4 - Transactions last Year \n5 - Search by Vendor \n0 - Go back to Ledger Screen \nH - Return to Home Screen");
             userAction = Utils.promptGetUserInput("Sort Ledger Report by: ");
 
+            //todo replace if/else statements with new switch statement (Java 14+)
+
             // call correct method that follows users action input
             if (userAction.equals("1")) {
                 formatMonthToDate();
@@ -42,6 +44,8 @@ public class Reports {
         }
     }
 
+    //todo Create 1 single method to format report that takes in user request as parameter and formats accordingly
+
     private static void formatMonthToDate() {
         System.out.println("All transactions this month");
     }
@@ -60,6 +64,5 @@ public class Reports {
     private static void searchByVendor() {
         System.out.println("Search transactions by vendor name");
     }
-
 
 }

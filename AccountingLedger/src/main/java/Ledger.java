@@ -16,6 +16,8 @@ public class Ledger {
             System.out.println("OPTIONS: \nA - Display all entries \nD - Display deposits \nP - Display payments \nR - Go to Reports Screen \nH - Return to Home Screen");
             userChoice = Utils.promptGetUserInput("What would you like to do?: ");
 
+            //todo replace if/else statements with new switch statement (Java 14+)
+
             // call correct method that follows users action input
             if (userChoice.equalsIgnoreCase("A")) {
                 displayEntries();
@@ -34,17 +36,14 @@ public class Ledger {
         }
     }
 
-    //!Change void to a return type (either hashmap or array list)
     public static void displayEntries() {
         System.out.println("Display all entries");
     }
 
-    //!Change void to a return type (either hashmap or array list)\
     public static void displayDeposits() {
         System.out.println("Display deposits only");
     }
 
-    //!Change void to a return type (either hashmap or array list)
     public static void displayPayments() {
         System.out.println("Display payments only");
     }

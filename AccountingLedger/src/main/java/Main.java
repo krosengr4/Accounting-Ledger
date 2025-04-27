@@ -21,8 +21,10 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
     H) Home - go back to the home page
      */
 
+    //todo Create displayHomeScreen() method and move the code in main method into displayHomeScreen method
+
     public static void main(String[] args) {
-        System.out.println("\t\t----------WELCOME TO THE ACCOUNTING LEDGER!----------");
+        System.out.println("\n\t\t--------------------WELCOME TO THE ACCOUNTING LEDGER!--------------------");
 
         String userChoice;
 
@@ -31,6 +33,8 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
             System.out.println("\n\t-----MAIN MENU-----");
             System.out.println("Enter the letter associated with the desired action\nD - Add a deposit \nP - Make a payment(debit) \nL - Go to Ledger Screen \nX - Exit the Ledger Application");
             userChoice = Utils.promptGetUserInput("What would you like to do?: ");
+
+            //todo replace if/else statements with new switch statement (Java 14+)
 
             // call correct method that follows users action input
             if (userChoice.equalsIgnoreCase("D")) {
@@ -55,7 +59,6 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
         System.out.println("Add a deposit");
     }
 
-    //! This will need to take in a parameter
     private static void makePayment() {
         //To add a payment well need file writer
         System.out.println("Make a payment");
