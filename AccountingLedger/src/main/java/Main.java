@@ -22,7 +22,7 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
      */
 
     public static void main(String[] args) {
-        System.out.println("\t----------WELCOME TO THE ACCOUNTING LEDGER!----------");
+        System.out.println("\t\t----------WELCOME TO THE ACCOUNTING LEDGER!----------");
 
         String userChoice;
 
@@ -50,14 +50,12 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
         }
     }
 
-    //! This will need to take in a parameter
     private static void addDeposit() {
         //To add deposit well need file writer
         System.out.println("Add a deposit");
     }
 
     //! This will need to take in a parameter
-
     private static void makePayment() {
         //To add a payment well need file writer
         System.out.println("Make a payment");

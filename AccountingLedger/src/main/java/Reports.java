@@ -10,7 +10,56 @@ public class Reports {
         0) Back - go back to the report page
         H) Home - go back to the home page
          */
-        System.out.println("\n\t-----REPORTS-----");
+
+        String userAction;
+
+        while(true) {
+            System.out.println("\n\t-----LEDGER REPORT-----");
+
+            //Get user input
+            System.out.println("OPTIONS: \n1 - Transactions this Month \n2 - Transactions last Month \n3 - Transactions this Year " +
+                    "\n4 - Transactions last Year \n5 - Search by Vendor \n0 - Go back to Ledger Screen \nH - Return to Home Screen");
+            userAction = Utils.promptGetUserInput("Sort Ledger Report by: ");
+
+            // call correct method that follows users action input
+            if (userAction.equals("1")) {
+                formatMonthToDate();
+            } else if (userAction.equals("2")) {
+                formatPreviousMonth();
+            } else if (userAction.equals("3")) {
+                formatYearToDate();
+            } else if (userAction.equals("4")) {
+                formatPreviousYear();
+            } else if (userAction.equals("5")) {
+                searchByVendor();
+            } else if (userAction.equals("0")) {
+                Ledger.displayLedgerScreen();
+            } else if (userAction.equalsIgnoreCase("H")) {
+                break;
+            } else {
+                System.err.println("ERROR! Please enter one of the letters or numbers listed");
+            }
+        }
     }
+
+    private static void formatMonthToDate() {
+        System.out.println("All transactions this month");
+    }
+    private static void formatPreviousMonth() {
+        System.out.println("All transactions last month");
+    }
+
+    private static void formatYearToDate() {
+        System.out.println("Transactions this year");
+    }
+
+    private static void formatPreviousYear() {
+        System.out.println("Transactions last year");
+    }
+
+    private static void searchByVendor() {
+        System.out.println("Search transactions by vendor name");
+    }
+
 
 }
