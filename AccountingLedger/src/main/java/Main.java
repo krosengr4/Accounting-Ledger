@@ -1,3 +1,12 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 public class Main {
     /*
 Home Screen
@@ -58,8 +67,29 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
     }
 
     private static void addDeposit() {
-        //To add deposit well need file writer
-        System.out.println("Add a deposit");
+        //Get user input
+        String userDescription = Utils.promptGetUserInput("What is the deposit description?: ");
+        String userVendor = Utils.promptGetUserInput("What the is deposit vendor?: ");
+        Double userAmount = Double.parseDouble(Utils.promptGetUserInput("What is the deposit amount?: "));
+
+        //Get and format the date and time
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter formattedDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
+        String logDateTime = dateTime.format(formattedDateTime);
+
+        //file to Write to
+        String logFile = "AccountingLedger/src/main/resources/transactions.csv";
+        //Open the file writer
+        try {
+            FileWriter writer = new FileWriter(logFile, true);
+            writer.write("\n" + logDateTime + "|" + userDescription + "|" + userVendor + "|" + userAmount);
+            writer.close();
+            System.out.printf("%s|%s|%s|%.2f\n", logDateTime, userDescription, userVendor, userAmount);
+            System.out.println("Success! Deposit transaction logged!");
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static void makePayment() {
