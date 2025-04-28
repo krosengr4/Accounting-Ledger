@@ -1,10 +1,6 @@
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class Main {
@@ -42,7 +38,7 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
         boolean ifContinue = true;
 
         //This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
-        while(ifContinue) {
+        while (ifContinue) {
             //Get user action input
             System.out.println("\n\t-----MAIN MENU-----");
             System.out.println("Enter the letter associated with the desired action\nD - Add a deposit \nP - Make a payment(debit) \nL - Go to Ledger Screen \nX - Exit the Ledger Application");

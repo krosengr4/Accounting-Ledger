@@ -9,6 +9,7 @@ public class Ledger {
     public static void displayLedgerScreen() {
         boolean ifContinue = true;
         String userChoice;
+        String userInputFromReports = "";
 
         //This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
         while (ifContinue) {
@@ -27,13 +28,14 @@ public class Ledger {
             } else if (userChoice.equalsIgnoreCase("P")) {
                 displayPayments();
             } else if (userChoice.equalsIgnoreCase("R")) {
-                Reports.displayReportsScreen();
+                userInputFromReports = Reports.displayReportsScreen();
             } else if (userChoice.equalsIgnoreCase("H")) {
-                System.out.println("Return to Home");
                 ifContinue = false;
-                Main.displayHomeScreen();
             } else {
                 System.err.println("ERROR! Please enter one of the letters listed");
+            }
+            if(userInputFromReports.equalsIgnoreCase("h")){
+                ifContinue = false;
             }
         }
     }

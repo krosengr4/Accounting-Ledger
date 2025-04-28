@@ -1,19 +1,12 @@
 public class Reports {
 
-    public static void displayReportsScreen() {
-        /*
-        1) Month To Date
-        2) Previous Month
-        3) Year To Date
-        4) Previous Year
-        5) Search by Vendor - prompt the user for the vendor name and display all entries for that vendor
-        0) Back - go back to the report page
-        H) Home - go back to the home page
-         */
-        String userAction;
+    public static String displayReportsScreen() {
+
+        boolean ifContinue = true;
+        String userAction = "";
 
         // This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
-        while(true) {
+        while(ifContinue) {
             System.out.println("\n\t-----LEDGER REPORT-----");
 
             //Get user input
@@ -35,13 +28,14 @@ public class Reports {
             } else if (userAction.equals("5")) {
                 searchByVendor();
             } else if (userAction.equals("0")) {
-                Ledger.displayLedgerScreen();
+                ifContinue = false;
             } else if (userAction.equalsIgnoreCase("H")) {
-                Main.displayHomeScreen();
+                ifContinue = false;
             } else {
                 System.err.println("ERROR! Please enter one of the letters or numbers listed");
             }
         }
+        return userAction;
     }
 
     //todo Create 1 single method to format report that takes in user request as parameter and formats accordingly
