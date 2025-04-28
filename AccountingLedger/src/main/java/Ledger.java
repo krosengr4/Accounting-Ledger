@@ -40,7 +40,7 @@ public class Ledger {
 
     public static void displayEntries() {
 
-        ArrayList<Transaction> ledger = new ArrayList<Transaction>();
+        ArrayList<Transaction> ledger = new ArrayList<>();
 
         try {
             FileReader reader = new FileReader("AccountingLedger/src/main/resources/transactions.csv");
@@ -89,7 +89,7 @@ public class Ledger {
                     continue;
                 }
 
-                if(lineData[4].startsWith("-")) {
+                if (lineData[4].startsWith("-")) {
                     continue;
                 } else {
                     //(lineData[0], lineData[1], lineData[2], lineData[3], Double.parseDouble(lineData[4])
@@ -108,6 +108,38 @@ public class Ledger {
     }
 
     public static void displayPayments() {
-        System.out.println("Display payments only");
+
+        ArrayList<Transaction> paymentLedger = new ArrayList<>();
+
+        try {
+
+            FileReader reader = new FileReader("AccountingLedger/src/main/resources/transactions.csv");
+            BufferedReader bufReader = new BufferedReader(reader);
+            String input;
+
+            while ((input = bufReader.readLine()) != null) {
+                String[] lineData = input.split("\\|");
+
+                if (lineData[0].equals("date")) {
+                    continue;
+                }
+
+                if (lineData[4].startsWith("-")) {
+                    Transaction payment = new Transaction(lineData[0], lineData[1], lineData[2], lineData[3], Double.parseDouble(lineData[4]));
+                    paymentLedger.add(payment);
+                } else {
+                    continue;
+                }
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        for (int i = 0; i < paymentLedger.size(); i++) {
+            Transaction p = paymentLedger.get(i);
+            System.out.printf("%s|%s|%s|%s|%s \n", p.getDate(), p.getTime(), p.getDescription(), p.getVendor(), p.getAmount());
+        }
     }
+
 }
