@@ -10,9 +10,9 @@ public class Reports {
         0) Back - go back to the report page
         H) Home - go back to the home page
          */
-
         String userAction;
 
+        // This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
         while(true) {
             System.out.println("\n\t-----LEDGER REPORT-----");
 

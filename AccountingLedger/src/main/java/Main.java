@@ -25,9 +25,13 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
 
     public static void main(String[] args) {
         System.out.println("\n\t\t--------------------WELCOME TO THE ACCOUNTING LEDGER!--------------------");
+        displayHomeScreen();
+    }
 
+    public static void displayHomeScreen() {
         String userChoice;
 
+        //This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
         while(true) {
             //Get user action input
             System.out.println("\n\t-----MAIN MENU-----");
@@ -39,10 +43,8 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
             // call correct method that follows users action input
             if (userChoice.equalsIgnoreCase("D")) {
                 addDeposit();
-                //This will need to pass an argument
             } else if (userChoice.equalsIgnoreCase("P")) {
                 makePayment();
-                //This will need to pass an argument
             } else if (userChoice.equalsIgnoreCase("L")) {
                 Ledger.displayLedgerScreen();
             } else if (userChoice.equalsIgnoreCase("X")) {

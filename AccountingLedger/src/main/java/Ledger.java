@@ -10,6 +10,7 @@ public class Ledger {
 
         String userChoice;
 
+        //This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
         while (true) {
             //Get user input
             System.out.println("\n\t-----LEDGER-----");
