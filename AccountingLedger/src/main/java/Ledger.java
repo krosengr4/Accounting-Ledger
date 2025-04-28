@@ -16,24 +16,33 @@ public class Ledger {
             //Get user input
             System.out.println("\n\t-----LEDGER-----");
             System.out.println("OPTIONS: \nA - Display all entries \nD - Display deposits \nP - Display payments \nR - Go to Reports Screen \nH - Return to Home Screen");
-            userChoice = Utils.promptGetUserInput("What would you like to do?: ");
+            userChoice = Utils.promptGetUserInput("What would you like to do?: ").toLowerCase();
 
             //todo replace if/else statements with new switch statement (Java 14+)
 
-            // call correct method that follows users action input
-            if (userChoice.equalsIgnoreCase("A")) {
-                displayEntries();
-            } else if (userChoice.equalsIgnoreCase("D")) {
-                displayDeposits();
-            } else if (userChoice.equalsIgnoreCase("P")) {
-                displayPayments();
-            } else if (userChoice.equalsIgnoreCase("R")) {
-                userInputFromReports = Reports.displayReportsScreen();
-            } else if (userChoice.equalsIgnoreCase("H")) {
-                ifContinue = false;
-            } else {
-                System.err.println("ERROR! Please enter one of the letters listed");
+            switch (userChoice) {
+                case "a" -> displayEntries();
+                case "d" -> displayDeposits();
+                case "p" -> displayPayments();
+                case "r" -> userInputFromReports = Reports.displayReportsScreen();
+                case "h" -> ifContinue = false;
+                default -> System.err.println("ERROR! Please enter one of the letters listed");
             }
+
+            // call correct method that follows users action input
+//            if (userChoice.equalsIgnoreCase("A")) {
+//                displayEntries();
+//            } else if (userChoice.equalsIgnoreCase("D")) {
+//                displayDeposits();
+//            } else if (userChoice.equalsIgnoreCase("P")) {
+//                displayPayments();
+//            } else if (userChoice.equalsIgnoreCase("R")) {
+//                userInputFromReports = Reports.displayReportsScreen();
+//            } else if (userChoice.equalsIgnoreCase("H")) {
+//                ifContinue = false;
+//            } else {
+//                System.err.println("ERROR! Please enter one of the letters listed");
+//            }
             if(userInputFromReports.equalsIgnoreCase("h")){
                 ifContinue = false;
             }

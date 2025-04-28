@@ -12,28 +12,39 @@ public class Reports {
             //Get user input
             System.out.println("OPTIONS: \n1 - Transactions this Month \n2 - Transactions last Month \n3 - Transactions this Year " +
                     "\n4 - Transactions last Year \n5 - Search by Vendor \n0 - Go back to Ledger Screen \nH - Return to Home Screen");
-            userAction = Utils.promptGetUserInput("Sort Ledger Report by: ");
+            userAction = Utils.promptGetUserInput("Sort Ledger Report by: ").toLowerCase();
 
             //todo replace if/else statements with new switch statement (Java 14+)
 
-            // call correct method that follows users action input
-            if (userAction.equals("1")) {
-                formatMonthToDate();
-            } else if (userAction.equals("2")) {
-                formatPreviousMonth();
-            } else if (userAction.equals("3")) {
-                formatYearToDate();
-            } else if (userAction.equals("4")) {
-                formatPreviousYear();
-            } else if (userAction.equals("5")) {
-                searchByVendor();
-            } else if (userAction.equals("0")) {
-                ifContinue = false;
-            } else if (userAction.equalsIgnoreCase("H")) {
-                ifContinue = false;
-            } else {
-                System.err.println("ERROR! Please enter one of the letters or numbers listed");
+            switch (userAction) {
+                case "1" -> formatMonthToDate();
+                case "2" -> formatPreviousMonth();
+                case "3" -> formatYearToDate();
+                case "4" -> formatPreviousYear();
+                case "5" -> searchByVendor();
+                case "0" -> ifContinue = false;
+                case "h" -> ifContinue = false;
+                default -> System.err.println("ERROR! Please enter one of the letters or numbers listed");
             }
+
+            // call correct method that follows users action input
+//            if (userAction.equals("1")) {
+//                formatMonthToDate();
+//            } else if (userAction.equals("2")) {
+//                formatPreviousMonth();
+//            } else if (userAction.equals("3")) {
+//                formatYearToDate();
+//            } else if (userAction.equals("4")) {
+//                formatPreviousYear();
+//            } else if (userAction.equals("5")) {
+//                searchByVendor();
+//            } else if (userAction.equals("0")) {
+//                ifContinue = false;
+//            } else if (userAction.equalsIgnoreCase("H")) {
+//                ifContinue = false;
+//            } else {
+//                System.err.println("ERROR! Please enter one of the letters or numbers listed");
+//            }
         }
         return userAction;
     }
