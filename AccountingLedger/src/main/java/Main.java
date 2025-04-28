@@ -48,8 +48,7 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
             } else if (userChoice.equalsIgnoreCase("L")) {
                 Ledger.displayLedgerScreen();
             } else if (userChoice.equalsIgnoreCase("X")) {
-                System.out.println("Thank you for using the Accounting Ledger! \n \tSee you soon :)");
-                break;
+                exitApplication();
             } else {
                 System.err.println("ERROR! Please enter one of the letters listed");
             }
@@ -64,6 +63,10 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
     private static void makePayment() {
         //To add a payment well need file writer
         System.out.println("Make a payment");
+    }
+
+    private static void exitApplication() {
+        System.out.println("Thank you for using the Accounting Ledger! \n \tSee you soon :)");
     }
 
 }

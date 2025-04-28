@@ -37,6 +37,7 @@ public class Reports {
             } else if (userAction.equals("0")) {
                 Ledger.displayLedgerScreen();
             } else if (userAction.equalsIgnoreCase("H")) {
+                Main.displayHomeScreen();
                 break;
             } else {
                 System.err.println("ERROR! Please enter one of the letters or numbers listed");
