@@ -7,11 +7,11 @@ import java.util.HashMap;
 public class Ledger {
 
     public static void displayLedgerScreen() {
-
+        boolean ifContinue = true;
         String userChoice;
 
         //This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
-        while (true) {
+        while (ifContinue) {
             //Get user input
             System.out.println("\n\t-----LEDGER-----");
             System.out.println("OPTIONS: \nA - Display all entries \nD - Display deposits \nP - Display payments \nR - Go to Reports Screen \nH - Return to Home Screen");
@@ -30,8 +30,8 @@ public class Ledger {
                 Reports.displayReportsScreen();
             } else if (userChoice.equalsIgnoreCase("H")) {
                 System.out.println("Return to Home");
+                ifContinue = false;
                 Main.displayHomeScreen();
-                break;
             } else {
                 System.err.println("ERROR! Please enter one of the letters listed");
             }
@@ -40,17 +40,17 @@ public class Ledger {
 
     public static void displayEntries() {
 
-        ArrayList <Transaction> ledger = new ArrayList<Transaction>();
+        ArrayList<Transaction> ledger = new ArrayList<Transaction>();
 
         try {
             FileReader reader = new FileReader("AccountingLedger/src/main/resources/transactions.csv");
             BufferedReader bufReader = new BufferedReader(reader);
             String input;
 
-            while((input = bufReader.readLine()) !=null) {
+            while ((input = bufReader.readLine()) != null) {
                 String[] lineData = input.split("\\|");
 
-                if(lineData[0].equals("date")) {
+                if (lineData[0].equals("date")) {
                     continue;
                 }
 
@@ -74,7 +74,37 @@ public class Ledger {
     }
 
     public static void displayDeposits() {
-        System.out.println("Display deposits only");
+
+        ArrayList<Transaction> depositLedger = new ArrayList<Transaction>();
+
+        try {
+            FileReader reader = new FileReader("AccountingLedger/src/main/resources/transactions.csv");
+            BufferedReader bufReader = new BufferedReader(reader);
+            String input;
+
+            while ((input = bufReader.readLine()) != null) {
+                String[] lineData = input.split("\\|");
+
+                if (lineData[0].equals("date")) {
+                    continue;
+                }
+
+                if(lineData[4].startsWith("-")) {
+                    continue;
+                } else {
+                    //(lineData[0], lineData[1], lineData[2], lineData[3], Double.parseDouble(lineData[4])
+                    Transaction deposit = new Transaction(lineData[0], lineData[1], lineData[2], lineData[3], Double.parseDouble(lineData[4]));
+                    depositLedger.add(deposit);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        for (int i = 0; i < depositLedger.size(); i++) {
+            Transaction d = depositLedger.get(i);
+            System.out.printf("%s|%s|%s|%s|%s \n", d.getDate(), d.getTime(), d.getDescription(), d.getVendor(), d.getAmount());
+        }
     }
 
     public static void displayPayments() {
