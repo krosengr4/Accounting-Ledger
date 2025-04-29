@@ -90,16 +90,25 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
         System.out.println("Make a payment");
 
         String userDescription = Utils.promptGetUserInput("What is the payment description?: ");
-        String userVendor = Utils.promptGetUserInput("What is the payment description?: ");
-        String userAmount = Utils.promptGetUserInput("What is the payment description?: ");
+        String userVendor = Utils.promptGetUserInput("What is the payment vendor?: ");
+        Double userAmount = Double.parseDouble(Utils.promptGetUserInput("What is the payment amount?: "));
 
         //Get and format the date and time
         LocalDateTime dateTime = LocalDateTime.now();
         DateTimeFormatter formattedDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
         String logDateTime = dateTime.format(formattedDateTime);
 
+        try {
+            FileWriter writer = new FileWriter(logFile, true);
+            writer.write("\n" + logDateTime + "|" + userDescription + "|" + userVendor + "|-" + userAmount);
+            writer.close();
 
+            System.out.printf("%s|%s|%s|-%.2f\n", logDateTime, userDescription, userVendor, userAmount);
+            System.out.println("Success! Deposit transaction logged!");
 
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
