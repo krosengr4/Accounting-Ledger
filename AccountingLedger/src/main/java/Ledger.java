@@ -23,7 +23,12 @@ public class Ledger {
                 case "a" -> displayEntries();
                 case "d" -> displayDeposits();
                 case "p" -> displayPayments();
-                case "r" -> userInputFromReports = Reports.displayReportsScreen();
+                case "r" -> {
+                    userInputFromReports = Reports.displayReportsScreen();
+                    if (userInputFromReports.equalsIgnoreCase("h")) {
+                        ifContinue = false;
+                    }
+                }
                 case "h" -> ifContinue = false;
                 default -> System.err.println("ERROR! Please enter one of the letters listed");
             }
