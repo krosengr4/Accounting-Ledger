@@ -1,3 +1,10 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Reports {
 
     public static String displayReportsScreen() {
@@ -6,7 +13,7 @@ public class Reports {
         String userAction = "";
 
         // This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
-        while(ifContinue) {
+        while (ifContinue) {
             System.out.println("\n\t-----LEDGER REPORT-----");
 
             //Get user input
@@ -32,8 +39,50 @@ public class Reports {
     //todo Create 1 single method to format report that takes in user request as parameter and formats accordingly
 
     private static void formatMonthToDate() {
-        System.out.println("All transactions this month");
+
+        LocalDate todayDate = LocalDate.now();
+        DateTimeFormatter month = DateTimeFormatter.ofPattern("MM");
+        String thisMonth = todayDate.format(month);
+
+        ArrayList<Transaction> transactions = new ArrayList<>();
+
+        try {
+            BufferedReader bufReader = new BufferedReader(new FileReader(Main.logFile));
+
+            String input;
+
+            while ((input = bufReader.readLine()) != null) {
+                String[] lineData = input.split("\\|");
+
+                if (lineData[0].equals("date")) {
+                    continue;
+                }
+
+                String date = lineData[0];
+                String time = lineData[1];
+                String description = lineData[2];
+                String vendor = lineData[3];
+                double amount = Double.parseDouble(lineData[4]);
+
+                String[] dateParts = date.split("-");
+
+                if (dateParts[1].equals(thisMonth)) {
+                    Transaction transThisMonth = new Transaction(date, time, description, vendor, amount);
+                    transactions.add(transThisMonth);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("---THIS MONTHS TRANSACTIONS---");
+
+        for (int i = 0; i < transactions.size(); i++) {
+            Transaction t = transactions.get(i);
+            System.out.printf("%s|%s|%s|%s|%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+        }
+
     }
+
     private static void formatPreviousMonth() {
         System.out.println("All transactions last month");
     }
