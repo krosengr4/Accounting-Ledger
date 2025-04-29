@@ -32,9 +32,6 @@ public class Ledger {
                 case "h" -> ifContinue = false;
                 default -> System.err.println("ERROR! Please enter one of the letters listed");
             }
-            if(userInputFromReports.equalsIgnoreCase("h")){
-                ifContinue = false;
-            }
         }
     }
 

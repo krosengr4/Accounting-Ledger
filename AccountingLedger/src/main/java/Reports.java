@@ -23,13 +23,12 @@ public class Reports {
 
             // call correct method that follows users action input
             switch (userAction) {
-                case "1" -> formatMonthToDate();
+                case "1" -> formatMonthToDate(userAction);
                 case "2" -> formatPreviousMonth();
                 case "3" -> formatYearToDate();
                 case "4" -> formatPreviousYear();
                 case "5" -> searchByVendor();
-                case "0" -> ifContinue = false;
-                case "h" -> ifContinue = false;
+                case "0", "h" -> ifContinue = false;
                 default -> System.err.println("ERROR! Please enter one of the letters or numbers listed");
             }
         }
@@ -38,7 +37,7 @@ public class Reports {
 
     //todo Create 1 single method to format report that takes in user request as parameter and formats accordingly
 
-    private static void formatMonthToDate() {
+    private static void formatMonthToDate(String userAction) {
 
         LocalDate todayDate = LocalDate.now();
         DateTimeFormatter month = DateTimeFormatter.ofPattern("MM");
@@ -67,9 +66,12 @@ public class Reports {
 
                 String[] dateParts = date.split("-");
 
-                if (dateParts[1].equals(thisMonth) && dateParts[0].equals(thisYear)) {
-                    Transaction transThisMonth = new Transaction(date, time, description, vendor, amount);
-                    transactions.add(transThisMonth);
+                if (userAction.equals("1")) {
+
+                    if (dateParts[1].equals(thisMonth) && dateParts[0].equals(thisYear)) {
+                        Transaction transThisMonth = new Transaction(date, time, description, vendor, amount);
+                        transactions.add(transThisMonth);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -119,11 +121,12 @@ public class Reports {
                 Integer intCurrentMonth = Integer.parseInt(thisMonth);
                 Integer intCurrentYear = Integer.parseInt(thisYear);
 
-                if (intCurrentMonth == 01 && intYear == (intCurrentYear - 1) && intMonth == 12) {
-                    Transaction transLastMonth = new Transaction(date, time, description, vendor, amount);
-                    transactions.add(transLastMonth);
-                } else if (dateParts[0].equals(thisYear) && intMonth == (intCurrentMonth - 1)) {
-                    Transaction transLastMonth = new Transaction(date, time, description, vendor, amount);
+                Transaction transLastMonth = new Transaction(date, time, description, vendor, amount);
+
+                //If current month is January, look at the last month of the previous year(December). Add to transLastMonth ArrayList.
+                //or if current month is not January, just look at previous month of this year. Add to transLastMonth ArrayList.
+                if ((intCurrentMonth == 01 && intYear == (intCurrentYear - 1) && intMonth == 12)
+                        || (dateParts[0].equals(thisYear) && intMonth == (intCurrentMonth - 1))) {
                     transactions.add(transLastMonth);
                 }
             }
@@ -235,6 +238,10 @@ public class Reports {
 
     private static void searchByVendor() {
         System.out.println("Search transactions by vendor name");
+
+        ArrayList<Transaction> transactions = new ArrayList<>();
+
+
     }
 
 }

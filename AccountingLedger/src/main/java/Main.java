@@ -29,8 +29,6 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
     //public file to Write to
     public static String logFile = "AccountingLedger/src/main/resources/transactions.csv";
 
-    //todo Create displayHomeScreen() method and move the code in main method into displayHomeScreen method
-
     public static void main(String[] args) {
         System.out.println("\n\t\t--------------------WELCOME TO THE ACCOUNTING LEDGER!--------------------");
         displayHomeScreen();
