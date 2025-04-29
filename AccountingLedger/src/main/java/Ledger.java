@@ -18,8 +18,7 @@ public class Ledger {
             System.out.println("OPTIONS: \nA - Display all entries \nD - Display deposits \nP - Display payments \nR - Go to Reports Screen \nH - Return to Home Screen");
             userChoice = Utils.promptGetUserInput("What would you like to do?: ").toLowerCase();
 
-            //todo replace if/else statements with new switch statement (Java 14+)
-
+            // call correct method that follows users action input
             switch (userChoice) {
                 case "a" -> displayEntries();
                 case "d" -> displayDeposits();
@@ -28,21 +27,6 @@ public class Ledger {
                 case "h" -> ifContinue = false;
                 default -> System.err.println("ERROR! Please enter one of the letters listed");
             }
-
-            // call correct method that follows users action input
-//            if (userChoice.equalsIgnoreCase("A")) {
-//                displayEntries();
-//            } else if (userChoice.equalsIgnoreCase("D")) {
-//                displayDeposits();
-//            } else if (userChoice.equalsIgnoreCase("P")) {
-//                displayPayments();
-//            } else if (userChoice.equalsIgnoreCase("R")) {
-//                userInputFromReports = Reports.displayReportsScreen();
-//            } else if (userChoice.equalsIgnoreCase("H")) {
-//                ifContinue = false;
-//            } else {
-//                System.err.println("ERROR! Please enter one of the letters listed");
-//            }
             if(userInputFromReports.equalsIgnoreCase("h")){
                 ifContinue = false;
             }
@@ -54,7 +38,7 @@ public class Ledger {
         ArrayList<Transaction> ledger = new ArrayList<>();
 
         try {
-            FileReader reader = new FileReader("AccountingLedger/src/main/resources/transactions.csv");
+            FileReader reader = new FileReader(Main.logFile);
             BufferedReader bufReader = new BufferedReader(reader);
             String input;
 
@@ -89,7 +73,7 @@ public class Ledger {
         ArrayList<Transaction> depositLedger = new ArrayList<Transaction>();
 
         try {
-            FileReader reader = new FileReader("AccountingLedger/src/main/resources/transactions.csv");
+            FileReader reader = new FileReader(Main.logFile);
             BufferedReader bufReader = new BufferedReader(reader);
             String input;
 
@@ -124,7 +108,7 @@ public class Ledger {
 
         try {
 
-            FileReader reader = new FileReader("AccountingLedger/src/main/resources/transactions.csv");
+            FileReader reader = new FileReader(Main.logFile);
             BufferedReader bufReader = new BufferedReader(reader);
             String input;
 

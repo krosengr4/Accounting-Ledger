@@ -26,6 +26,9 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
     H) Home - go back to the home page
      */
 
+    //public file to Write to
+    public static String logFile = "AccountingLedger/src/main/resources/transactions.csv";
+
     //todo Create displayHomeScreen() method and move the code in main method into displayHomeScreen method
 
     public static void main(String[] args) {
@@ -44,8 +47,7 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
             System.out.println("Enter the letter associated with the desired action\nD - Add a deposit \nP - Make a payment(debit) \nL - Go to Ledger Screen \nX - Exit the Ledger Application");
             userChoice = Utils.promptGetUserInput("What would you like to do?: ").toLowerCase();
 
-            //todo replace if/else statements with new switch statement (Java 14+)
-
+            // call correct method that follows users action input
             switch (userChoice) {
                 case "d" -> addDeposit();
                 case "p" -> makePayment();
@@ -56,20 +58,6 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
                 }
                 default -> System.err.println("ERROR! Please enter one of the letters listed");
             }
-
-            // call correct method that follows users action input
-//            if (userChoice.equalsIgnoreCase("D")) {
-//                addDeposit();
-//            } else if (userChoice.equalsIgnoreCase("P")) {
-//                makePayment();
-//            } else if (userChoice.equalsIgnoreCase("L")) {
-//                Ledger.displayLedgerScreen();
-//            } else if (userChoice.equalsIgnoreCase("X")) {
-//                System.out.println("Thank you for using the Accounting Ledger!\n\tSee you soon :)");
-//                ifContinue = false;
-//            } else {
-//                System.err.println("ERROR! Please enter one of the letters listed");
-//            }
         }
     }
 
@@ -84,8 +72,6 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
         DateTimeFormatter formattedDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
         String logDateTime = dateTime.format(formattedDateTime);
 
-        //file to Write to
-        String logFile = "AccountingLedger/src/main/resources/transactions.csv";
         //Open the file writer
         try {
             FileWriter writer = new FileWriter(logFile, true);
@@ -102,6 +88,18 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
     private static void makePayment() {
         //To add a payment well need file writer
         System.out.println("Make a payment");
+
+        String userDescription = Utils.promptGetUserInput("What is the payment description?: ");
+        String userVendor = Utils.promptGetUserInput("What is the payment description?: ");
+        String userAmount = Utils.promptGetUserInput("What is the payment description?: ");
+
+        //Get and format the date and time
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter formattedDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
+        String logDateTime = dateTime.format(formattedDateTime);
+
+
+
     }
 
 }
