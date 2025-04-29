@@ -85,7 +85,7 @@ public class Reports {
     }
 
     private static void formatPreviousMonth() {
-        System.out.println("All transactions last month");
+        System.out.println("Formate Previous Month");
     }
 
     private static void formatYearToDate() {
@@ -96,7 +96,7 @@ public class Reports {
 
         ArrayList<Transaction> transactions = new ArrayList<>();
 
-        try{
+        try {
             BufferedReader bufReader = new BufferedReader(new FileReader(Main.logFile));
 
             String input;
@@ -136,7 +136,53 @@ public class Reports {
     }
 
     private static void formatPreviousYear() {
-        System.out.println("Transactions last year");
+
+        LocalDate todayDate = LocalDate.now();
+        DateTimeFormatter formatMonth = DateTimeFormatter.ofPattern("MM");
+        String thisMonth = todayDate.format(formatMonth);
+        DateTimeFormatter formatYear = DateTimeFormatter.ofPattern("yyyy");
+        String thisYear = todayDate.format(formatYear);
+
+        ArrayList<Transaction> transactions = new ArrayList<>();
+
+        try {
+            BufferedReader bufReader = new BufferedReader(new FileReader(Main.logFile));
+            String input;
+
+            while ((input = bufReader.readLine()) != null) {
+
+                String[] lineData = input.split("\\|");
+
+                if (lineData[0].equals("date")) {
+                    continue;
+                }
+
+                String date = lineData[0];
+                String time = lineData[1];
+                String description = lineData[2];
+                String vendor = lineData[3];
+                double amount = Double.parseDouble(lineData[4]);
+
+                String[] dateParts = date.split("-");
+
+                Integer intYear = Integer.parseInt(dateParts[0]);
+                Integer intCurrentYear = Integer.parseInt(thisYear);
+
+                if (intYear == (intCurrentYear - 1)) {
+                    Transaction transLastYear = new Transaction(date, time, description, vendor, amount);
+                    transactions.add(transLastYear);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("---LAST YEARS TRANSACTIONS---");
+
+        for (int i = 0; i < transactions.size(); i++) {
+            Transaction t = transactions.get(i);
+            System.out.printf("%s|%s|%s|%s|%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+        }
     }
 
     private static void searchByVendor() {
