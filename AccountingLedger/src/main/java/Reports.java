@@ -43,12 +43,13 @@ public class Reports {
         LocalDate todayDate = LocalDate.now();
         DateTimeFormatter month = DateTimeFormatter.ofPattern("MM");
         String thisMonth = todayDate.format(month);
+        DateTimeFormatter year = DateTimeFormatter.ofPattern("yyyy");
+        String thisYear = todayDate.format(year);
 
         ArrayList<Transaction> transactions = new ArrayList<>();
 
         try {
             BufferedReader bufReader = new BufferedReader(new FileReader(Main.logFile));
-
             String input;
 
             while ((input = bufReader.readLine()) != null) {
@@ -66,7 +67,7 @@ public class Reports {
 
                 String[] dateParts = date.split("-");
 
-                if (dateParts[1].equals(thisMonth)) {
+                if (dateParts[1].equals(thisMonth) && dateParts[0].equals(thisYear)) {
                     Transaction transThisMonth = new Transaction(date, time, description, vendor, amount);
                     transactions.add(transThisMonth);
                 }
@@ -88,7 +89,50 @@ public class Reports {
     }
 
     private static void formatYearToDate() {
-        System.out.println("Transactions this year");
+
+        LocalDate todayDate = LocalDate.now();
+        DateTimeFormatter year = DateTimeFormatter.ofPattern("yyyy");
+        String thisYear = todayDate.format(year);
+
+        ArrayList<Transaction> transactions = new ArrayList<>();
+
+        try{
+            BufferedReader bufReader = new BufferedReader(new FileReader(Main.logFile));
+
+            String input;
+
+            while ((input = bufReader.readLine()) != null) {
+                String[] lineData = input.split("\\|");
+
+                if (lineData[0].equals("date")) {
+                    continue;
+                }
+
+                String date = lineData[0];
+                String time = lineData[1];
+                String description = lineData[2];
+                String vendor = lineData[3];
+                double amount = Double.parseDouble(lineData[4]);
+
+                String[] dateParts = date.split("-");
+
+                if (dateParts[0].equals(thisYear)) {
+                    Transaction transThisMonth = new Transaction(date, time, description, vendor, amount);
+                    transactions.add(transThisMonth);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("---THIS YEARS TRANSACTIONS---");
+
+        for (int i = 0; i < transactions.size(); i++) {
+            Transaction t = transactions.get(i);
+            System.out.printf("%s|%s|%s|%s|%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+        }
+
+
     }
 
     private static void formatPreviousYear() {
