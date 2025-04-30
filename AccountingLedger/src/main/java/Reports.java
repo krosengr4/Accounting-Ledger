@@ -17,9 +17,9 @@ public class Reports {
             System.out.println("\n\t-----LEDGER REPORT-----");
 
             //Get user input
-            System.out.println("OPTIONS: \n1 - Transactions this Month \n2 - Transactions last Month \n3 - Transactions this Year " +
+            System.out.println("SORT REPORT BY: \n1 - Transactions this Month \n2 - Transactions last Month \n3 - Transactions this Year " +
                     "\n4 - Transactions last Year \n5 - Search by Vendor \n0 - Go back to Ledger Screen \nH - Return to Home Screen");
-            userAction = Utils.promptGetUserInput("Sort Ledger Report by: ").toLowerCase();
+            userAction = Utils.promptGetUserInput("What would you like to do?: ").toLowerCase();
 
             // call correct method that follows users action input
             switch (userAction) {
@@ -237,11 +237,45 @@ public class Reports {
     }
 
     private static void searchByVendor() {
-        System.out.println("Search transactions by vendor name");
 
-        ArrayList<Transaction> transactions = new ArrayList<>();
+        String userVendorSearch = Utils.promptGetUserInput("Enter the vendor you would like to search: ");
 
+        ArrayList<Transaction> transactionList = new ArrayList<>();
+
+        try {
+
+            BufferedReader bufReader = new BufferedReader(new FileReader(Main.logFile));
+            String input;
+
+            while ((input = bufReader.readLine()) != null) {
+
+                String[] lineData = input.split("\\|");
+
+                if (lineData[0].equals("date")) {
+                    continue;
+                }
+
+                String date = lineData[0];
+                String time = lineData[1];
+                String description = lineData[2];
+                String vendor = lineData[3];
+                double amount = Double.parseDouble(lineData[4]);
+
+                Transaction newTransaction = new Transaction(date, time, description, vendor, amount);
+
+                if(userVendorSearch.equalsIgnoreCase(vendor)) {
+                    transactionList.add(newTransaction);
+                }
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        for (int i = 0; i < transactionList.size(); i++) {
+            Transaction t = transactionList.get(i);
+            System.out.printf("%s|%s|%s|%s|%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+        }
 
     }
-
 }
