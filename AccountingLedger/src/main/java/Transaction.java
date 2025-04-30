@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public class Transaction {
     //declare variables for constructor
     String date;
@@ -52,5 +54,8 @@ public class Transaction {
     }
     //endregion
 
-
+//    @Override
+//    public int compareTo(Transaction other) {
+//        return this.localDateTime.compareTo(other.localDateTime);
+//    }
 }
