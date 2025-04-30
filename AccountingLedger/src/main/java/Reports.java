@@ -31,8 +31,6 @@ public class Reports {
         return userAction;
     }
 
-    //todo Create 1 single method to format report that takes in user request as parameter and formats accordingly
-
     private static void loadReportByDate(String userAction) {
 
         LocalDate todayDate = LocalDate.now();

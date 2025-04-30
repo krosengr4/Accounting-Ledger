@@ -18,7 +18,7 @@ public class Ledger {
 
             // call correct method that follows users action input
             switch (userChoice) {
-                case "a", "d", "p" -> displayLedger(userChoice);
+                case "a", "d", "p" -> sortAndPrintLedger(userChoice);
                 case "r" -> {
                     userInputFromReports = Reports.displayReportsScreen();
                     if (userInputFromReports.equalsIgnoreCase("h")) {
@@ -31,7 +31,23 @@ public class Ledger {
         }
     }
 
-    public static void displayLedger(String userChoice) {
+    public static void sortAndPrintLedger(String userChoice) {
+
+        switch (userChoice) {
+            case "a" -> System.out.println("\t\t---ALL ENTRIES---");
+            case "d" -> System.out.println("\t\t---ALL DEPOSITS---");
+            case "p" -> System.out.println("\t\t---ALL PAYMENTS---");
+        }
+
+        ArrayList<Transaction> ledger = loadLedger(userChoice);
+
+        for (int i = 0; i < ledger.size(); i++) {
+            Transaction t = ledger.get(i);
+            System.out.printf("%s|%s|%s|%s|%.2f \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+        }
+    }
+
+    public static ArrayList<Transaction> loadLedger(String userChoice) {
 
         ArrayList<Transaction> ledger = new ArrayList<>();
 
@@ -71,9 +87,7 @@ public class Ledger {
             throw new RuntimeException(e);
         }
 
-        for (int i = 0; i < ledger.size(); i++) {
-            Transaction t = ledger.get(i);
-            System.out.printf("%s|%s|%s|%s|%.2f \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
-        }
+        return ledger;
+
     }
 }
