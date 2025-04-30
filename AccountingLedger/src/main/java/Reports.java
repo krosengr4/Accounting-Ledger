@@ -50,11 +50,8 @@ public class Reports {
 
     private static ArrayList<Transaction> loadReportByDate(String userAction) {
 
-        LocalDate todayDate = LocalDate.now();
-        DateTimeFormatter month = DateTimeFormatter.ofPattern("MM");
-        String thisMonth = todayDate.format(month);
-        DateTimeFormatter year = DateTimeFormatter.ofPattern("yyyy");
-        String thisYear = todayDate.format(year);
+        String thisMonth = Utils.getLocalMonth();
+        String thisYear = Utils.getLocalYear();
 
         ArrayList<Transaction> transactions = new ArrayList<>();
 
