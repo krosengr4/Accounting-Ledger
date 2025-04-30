@@ -34,7 +34,7 @@ public class Ledger {
     public static void sortAndPrintLedger(String userChoice) {
 
         switch (userChoice) {
-            case "a" -> System.out.println("\t\t---ALL ENTRIES---");
+            case "a" -> System.out.println("\t\t---ALL TRANSACTIONS---");
             case "d" -> System.out.println("\t\t---ALL DEPOSITS---");
             case "p" -> System.out.println("\t\t---ALL PAYMENTS---");
         }

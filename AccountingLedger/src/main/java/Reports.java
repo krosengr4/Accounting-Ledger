@@ -22,7 +22,7 @@ public class Reports {
 
             // call correct method that follows users action input
             switch (userAction) {
-                case "1", "2", "3", "4" -> loadReportByDate(userAction);
+                case "1", "2", "3", "4" -> displayReportByDate(userAction);
                 case "5" -> searchByVendor();
                 case "0", "h" -> ifContinue = false;
                 default -> System.err.println("ERROR! Please enter one of the letters or numbers listed");
@@ -31,7 +31,24 @@ public class Reports {
         return userAction;
     }
 
-    private static void loadReportByDate(String userAction) {
+    public static void displayReportByDate(String userAction) {
+
+        switch (userAction) {
+            case "1" -> System.out.println("\t\t---TRANSACTIONS THIS MONTH---");
+            case "2" -> System.out.println("\t\t---TRANSACTIONS LAST MONTH---");
+            case "3" -> System.out.println("\t\t---TRANSACTIONS THIS YEAR---");
+            case "4" -> System.out.println("\t\t---TRANSACTIONS LAST YEAR---");
+        }
+
+        ArrayList<Transaction> transactions = loadReportByDate(userAction);
+
+        for (int i = 0; i < transactions.size(); i++) {
+            Transaction t = transactions.get(i);
+            System.out.printf("%s|%s|%s|%s|%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+        }
+    }
+
+    private static ArrayList<Transaction> loadReportByDate(String userAction) {
 
         LocalDate todayDate = LocalDate.now();
         DateTimeFormatter month = DateTimeFormatter.ofPattern("MM");
@@ -98,13 +115,8 @@ public class Reports {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        System.out.println("---TRANSACTIONS---");
 
-        for (int i = 0; i < transactions.size(); i++) {
-            Transaction t = transactions.get(i);
-            System.out.printf("%s|%s|%s|%s|%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
-        }
-
+        return transactions;
     }
 
     private static void searchByVendor() {
