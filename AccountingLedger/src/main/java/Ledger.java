@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Ledger {
 
@@ -40,6 +42,8 @@ public class Ledger {
         }
 
         ArrayList<Transaction> ledger = loadLedger(userChoice);
+
+        //todo: Sort each object in the array list based on the date (newest first, oldest last)
 
         for (int i = 0; i < ledger.size(); i++) {
             Transaction t = ledger.get(i);
