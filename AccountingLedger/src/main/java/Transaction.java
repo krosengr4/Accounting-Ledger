@@ -32,6 +32,11 @@ public class Transaction {
         this.time = time;
     }
 
+    //Used for sorting
+    public String getDateTime() {
+        return date + "-" + time;
+    }
+
     public String getDescription() {
         return description;
     }

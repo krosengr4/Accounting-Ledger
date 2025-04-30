@@ -43,8 +43,8 @@ public class Reports {
 
         ArrayList<Transaction> transactions = loadReportByDate(userAction);
 
-        //todo: Sort each object in the array list based on the date (newest first, oldest last)
-        transactions.sort(Comparator.comparing(Transaction::getDate));
+        //Sort each object in the array list based on the date
+        transactions.sort(Comparator.comparing(Transaction::getDateTime));
 
         for (int i = 0; i < transactions.size(); i++) {
             Transaction t = transactions.get(i);

@@ -42,8 +42,8 @@ public class Ledger {
 
         ArrayList<Transaction> ledger = loadLedger(userChoice);
 
-        //todo: Sort each object in the array list based on the date (newest first, oldest last)
-        ledger.sort(Comparator.comparing(Transaction::getDate));
+        //Sort each object in the array list based on the date
+        ledger.sort(Comparator.comparing(Transaction::getDateTime));
 
         for (int i = 0; i < ledger.size(); i++) {
             Transaction t = ledger.get(i);
@@ -69,19 +69,19 @@ public class Ledger {
 
                 Transaction newTransaction = new Transaction(lineData[0], lineData[1], lineData[2], lineData[3], Double.parseDouble(lineData[4]));
 
-                switch(userChoice) {
+                switch (userChoice) {
                     case "a":
                         ledger.add(newTransaction);
                         break;
                     case "d":
-                        if(lineData[4].startsWith("-")) {
+                        if (lineData[4].startsWith("-")) {
                             continue;
                         } else {
                             ledger.add(newTransaction);
                             break;
                         }
                     case "p":
-                        if(lineData[4].startsWith("-")) {
+                        if (lineData[4].startsWith("-")) {
                             ledger.add(newTransaction);
                             break;
                         }
