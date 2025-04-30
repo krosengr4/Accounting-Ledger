@@ -1,8 +1,6 @@
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Ledger {
 
@@ -20,9 +18,7 @@ public class Ledger {
 
             // call correct method that follows users action input
             switch (userChoice) {
-                case "a" -> displayEntries();
-                case "d" -> displayDeposits();
-                case "p" -> displayPayments();
+                case "a", "d", "p" -> displayLedger(userChoice);
                 case "r" -> {
                     userInputFromReports = Reports.displayReportsScreen();
                     if (userInputFromReports.equalsIgnoreCase("h")) {
@@ -35,7 +31,7 @@ public class Ledger {
         }
     }
 
-    public static void displayEntries() {
+    public static void displayLedger(String userChoice) {
 
         ArrayList<Transaction> ledger = new ArrayList<>();
 
@@ -51,14 +47,25 @@ public class Ledger {
                     continue;
                 }
 
-                String date = lineData[0];
-                String time = lineData[1];
-                String description = lineData[2];
-                String vendor = lineData[3];
-                double amount = Double.parseDouble(lineData[4]);
+                Transaction newTransaction = new Transaction(lineData[0], lineData[1], lineData[2], lineData[3], Double.parseDouble(lineData[4]));
 
-                Transaction newTransaction = new Transaction(date, time, description, vendor, amount);
-                ledger.add(newTransaction);
+                switch(userChoice) {
+                    case "a":
+                        ledger.add(newTransaction);
+                        break;
+                    case "d":
+                        if(lineData[4].startsWith("-")) {
+                            continue;
+                        } else {
+                            ledger.add(newTransaction);
+                            break;
+                        }
+                    case "p":
+                        if(lineData[4].startsWith("-")) {
+                            ledger.add(newTransaction);
+                            break;
+                        }
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -66,77 +73,7 @@ public class Ledger {
 
         for (int i = 0; i < ledger.size(); i++) {
             Transaction t = ledger.get(i);
-            System.out.printf("%s|%s|%s|%s|%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+            System.out.printf("%s|%s|%s|%s|%.2f \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
         }
     }
-
-    public static void displayDeposits() {
-
-        ArrayList<Transaction> depositLedger = new ArrayList<Transaction>();
-
-        try {
-            FileReader reader = new FileReader(Main.logFile);
-            BufferedReader bufReader = new BufferedReader(reader);
-            String input;
-
-            while ((input = bufReader.readLine()) != null) {
-                String[] lineData = input.split("\\|");
-
-                if (lineData[0].equals("date")) {
-                    continue;
-                }
-
-                if (lineData[4].startsWith("-")) {
-                    continue;
-                } else {
-                    //(lineData[0], lineData[1], lineData[2], lineData[3], Double.parseDouble(lineData[4])
-                    Transaction deposit = new Transaction(lineData[0], lineData[1], lineData[2], lineData[3], Double.parseDouble(lineData[4]));
-                    depositLedger.add(deposit);
-                }
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        for (int i = 0; i < depositLedger.size(); i++) {
-            Transaction d = depositLedger.get(i);
-            System.out.printf("%s|%s|%s|%s|%s \n", d.getDate(), d.getTime(), d.getDescription(), d.getVendor(), d.getAmount());
-        }
-    }
-
-    public static void displayPayments() {
-
-        ArrayList<Transaction> paymentLedger = new ArrayList<>();
-
-        try {
-
-            FileReader reader = new FileReader(Main.logFile);
-            BufferedReader bufReader = new BufferedReader(reader);
-            String input;
-
-            while ((input = bufReader.readLine()) != null) {
-                String[] lineData = input.split("\\|");
-
-                if (lineData[0].equals("date")) {
-                    continue;
-                }
-
-                if (lineData[4].startsWith("-")) {
-                    Transaction payment = new Transaction(lineData[0], lineData[1], lineData[2], lineData[3], Double.parseDouble(lineData[4]));
-                    paymentLedger.add(payment);
-                } else {
-                    continue;
-                }
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        for (int i = 0; i < paymentLedger.size(); i++) {
-            Transaction p = paymentLedger.get(i);
-            System.out.printf("%s|%s|%s|%s|%s \n", p.getDate(), p.getTime(), p.getDescription(), p.getVendor(), p.getAmount());
-        }
-    }
-
 }
