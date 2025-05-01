@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 public class Utils {
 
+    //public file to Write to
+    public static String logFile = "AccountingLedger/src/main/resources/transactions.csv";
+
     //Colors for printing out colored messages
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";

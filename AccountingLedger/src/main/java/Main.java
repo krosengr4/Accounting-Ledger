@@ -26,8 +26,7 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
     H) Home - go back to the home page
      */
 
-    //public file to Write to
-    public static String logFile = "AccountingLedger/src/main/resources/transactions.csv";
+
 
     public static void main(String[] args) {
         System.out.println(Utils.ANSI_BLUE +"\n\t\t--------------------WELCOME TO THE ACCOUNTING LEDGER!--------------------"+ Utils.ANSI_RESET);
@@ -73,7 +72,7 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
 
         //Open the file writer
         try {
-            FileWriter writer = new FileWriter(logFile, true);
+            FileWriter writer = new FileWriter(Utils.logFile, true);
             writer.write("\n" + logDateTime + "|" + userDescription + "|" + userVendor + "|" + userAmount);
             writer.close();
             System.out.printf("%s|%s|%s|%.2f\n", logDateTime, userDescription, userVendor, userAmount);
@@ -98,7 +97,7 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
         String logDateTime = dateTime.format(formattedDateTime);
 
         try {
-            FileWriter writer = new FileWriter(logFile, true);
+            FileWriter writer = new FileWriter(Utils.logFile, true);
             writer.write("\n" + logDateTime + "|" + userDescription + "|" + userVendor + "|-" + userAmount);
             writer.close();
 

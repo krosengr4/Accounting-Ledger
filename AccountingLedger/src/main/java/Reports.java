@@ -60,7 +60,7 @@ public class Reports {
         ArrayList<Transaction> transactions = new ArrayList<>();
 
         try {
-            BufferedReader bufReader = new BufferedReader(new FileReader(Main.logFile));
+            BufferedReader bufReader = new BufferedReader(new FileReader(Utils.logFile));
             String input;
 
             while ((input = bufReader.readLine()) != null) {
@@ -128,7 +128,7 @@ public class Reports {
 
         try {
 
-            BufferedReader bufReader = new BufferedReader(new FileReader(Main.logFile));
+            BufferedReader bufReader = new BufferedReader(new FileReader(Utils.logFile));
             String input;
 
             while ((input = bufReader.readLine()) != null) {

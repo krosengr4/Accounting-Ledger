@@ -58,7 +58,7 @@ public class Ledger {
         ArrayList<Transaction> ledger = new ArrayList<>();
 
         try {
-            FileReader reader = new FileReader(Main.logFile);
+            FileReader reader = new FileReader(Utils.logFile);
             BufferedReader bufReader = new BufferedReader(reader);
             String input;
 
