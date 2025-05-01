@@ -15,9 +15,9 @@ public class Ledger {
         //This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
         while (ifContinue) {
             //Get user input
-            System.out.println(Utils.ANSI_BLUE +"\n\t-----LEDGER-----"+ Utils.ANSI_RESET);
-            System.out.println(Utils.ANSI_YELLOW +"OPTIONS:" + Utils.ANSI_RESET+"\nA - Display all entries \nD - Display deposits \nP - Display payments \nR - Go to Reports Screen \nH - Return to Main Menu");
-            userChoice = Utils.promptGetUserInput(Utils.ANSI_YELLOW +"What would you like to do?: ").toLowerCase();
+            System.out.println(Utils.ANSI_BLUE + "\n\t-----LEDGER-----" + Utils.ANSI_RESET);
+            System.out.println(Utils.ANSI_YELLOW + "OPTIONS:" + Utils.ANSI_RESET + "\nA - Display all entries \nD - Display deposits \nP - Display payments \nR - Go to Reports Screen \nH - Return to Main Menu");
+            userChoice = Utils.promptGetUserInput(Utils.ANSI_YELLOW + "What would you like to do?: ").toLowerCase();
 
             // call correct method that follows users action input
             switch (userChoice) {
@@ -37,19 +37,24 @@ public class Ledger {
     public static void sortAndPrintLedger(String userChoice) {
 
         switch (userChoice) {
-            case "a" -> System.out.println(Utils.ANSI_CYAN +"\t\t---ALL TRANSACTIONS---"+ Utils.ANSI_RESET);
-            case "d" -> System.out.println(Utils.ANSI_GREEN +"\t\t---ALL DEPOSITS---"+ Utils.ANSI_RESET);
-            case "p" -> System.out.println(Utils.ANSI_RED +"\t\t---ALL PAYMENTS---"+ Utils.ANSI_RESET);
+            case "a" -> System.out.println(Utils.ANSI_PURPLE + "\t\t---ALL TRANSACTIONS---" + Utils.ANSI_RESET);
+            case "d" -> System.out.println(Utils.ANSI_GREEN + "\t\t---ALL DEPOSITS---" + Utils.ANSI_RESET);
+            case "p" -> System.out.println(Utils.ANSI_RED + "\t\t---ALL PAYMENTS---" + Utils.ANSI_RESET);
         }
 
         ArrayList<Transaction> ledger = loadLedger(userChoice);
 
-        //Sort each object in the array list based on the date and time
-        ledger.sort(Comparator.comparing(Transaction::getDateTime).reversed());
+        if (ledger.size() == 0) {
+            System.out.println(Utils.ANSI_RED + "There are currently no transactions." + Utils.ANSI_RESET);
+        } else {
+            //Sort each object in the array list based on the date and time
+            ledger.sort(Comparator.comparing(Transaction::getDateTime).reversed());
 
-        for (int i = 0; i < ledger.size(); i++) {
-            Transaction t = ledger.get(i);
-            System.out.printf("%s|%s|%s|%s|%.2f \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+            //loop through array list and print out each object(transaction) in ledger Array List
+            for (int i = 0; i < ledger.size(); i++) {
+                Transaction t = ledger.get(i);
+                System.out.printf("%s|%s|%s|%s|%.2f \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+            }
         }
     }
 

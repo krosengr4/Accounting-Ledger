@@ -14,12 +14,12 @@ public class Reports {
 
         // This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
         while (ifContinue) {
-            System.out.println(Utils.ANSI_BLUE +"\n\t-----LEDGER REPORT-----"+ Utils.ANSI_RESET);
+            System.out.println(Utils.ANSI_BLUE + "\n\t-----LEDGER REPORT-----" + Utils.ANSI_RESET);
 
             //Get user input
-            System.out.println(Utils.ANSI_YELLOW +"SORT REPORT BY:"+ Utils.ANSI_RESET +"\n1 - Transactions this Month \n2 - Transactions last Month \n3 - Transactions this Year " +
+            System.out.println(Utils.ANSI_YELLOW + "SORT REPORT BY:" + Utils.ANSI_RESET + "\n1 - Transactions this Month \n2 - Transactions last Month \n3 - Transactions this Year " +
                     "\n4 - Transactions last Year \n5 - Search by Vendor \n0 - Go back to Ledger Screen \nH - Return to Main Menu");
-            userAction = Utils.promptGetUserInput(Utils.ANSI_YELLOW +"What would you like to do?: "+ Utils.ANSI_RESET).toLowerCase();
+            userAction = Utils.promptGetUserInput(Utils.ANSI_YELLOW + "What would you like to do?: " + Utils.ANSI_RESET).toLowerCase();
 
             // call correct method that follows users action input
             switch (userAction) {
@@ -35,20 +35,26 @@ public class Reports {
     public static void displayReportByDate(String userAction) {
 
         switch (userAction) {
-            case "1" -> System.out.println(Utils.ANSI_PURPLE +"\t\t---TRANSACTIONS THIS MONTH---"+ Utils.ANSI_RESET);
-            case "2" -> System.out.println(Utils.ANSI_PURPLE +"\t\t---TRANSACTIONS LAST MONTH---"+ Utils.ANSI_RESET);
-            case "3" -> System.out.println(Utils.ANSI_PURPLE +"\t\t---TRANSACTIONS THIS YEAR---"+ Utils.ANSI_RESET);
-            case "4" -> System.out.println(Utils.ANSI_PURPLE +"\t\t---TRANSACTIONS LAST YEAR---"+ Utils.ANSI_RESET);
+            case "1" -> System.out.println(Utils.ANSI_PURPLE + "\t\t---TRANSACTIONS THIS MONTH---" + Utils.ANSI_RESET);
+            case "2" -> System.out.println(Utils.ANSI_PURPLE + "\t\t---TRANSACTIONS LAST MONTH---" + Utils.ANSI_RESET);
+            case "3" -> System.out.println(Utils.ANSI_PURPLE + "\t\t---TRANSACTIONS THIS YEAR---" + Utils.ANSI_RESET);
+            case "4" -> System.out.println(Utils.ANSI_PURPLE + "\t\t---TRANSACTIONS LAST YEAR---" + Utils.ANSI_RESET);
         }
 
         ArrayList<Transaction> transactions = loadReportByDate(userAction);
 
-        //Sort each object in the array list based on the date
-        transactions.sort(Comparator.comparing(Transaction::getDateTime).reversed());
 
-        for (int i = 0; i < transactions.size(); i++) {
-            Transaction t = transactions.get(i);
-            System.out.printf("%s|%s|%s|%s|%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+        if (transactions.size() == 0) {
+            System.out.println(Utils.ANSI_RED + "There are currently no transactions." + Utils.ANSI_RESET);
+        } else {
+            //Sort each object in the array list based on the date
+            transactions.sort(Comparator.comparing(Transaction::getDateTime).reversed());
+
+            //Loop through and print out each object(transaction) in transactions ArrayList
+            for (int i = 0; i < transactions.size(); i++) {
+                Transaction t = transactions.get(i);
+                System.out.printf("%s|%s|%s|%s|%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+            }
         }
     }
 
@@ -66,7 +72,7 @@ public class Reports {
             while ((input = bufReader.readLine()) != null) {
                 String[] lineData = input.split("\\|");
 
-                if (lineData[0].equals("date")) {
+                if (lineData[0].equals("") || lineData[0].equals("date")) {
                     continue;
                 }
 
@@ -122,7 +128,7 @@ public class Reports {
 
     private static void searchByVendor() {
 
-        String userVendorSearch = Utils.promptGetUserInput(Utils.ANSI_YELLOW +"Enter the vendor you would like to search: "+ Utils.ANSI_RESET);
+        String userVendorSearch = Utils.promptGetUserInput(Utils.ANSI_YELLOW + "Enter the vendor you would like to search: " + Utils.ANSI_RESET);
 
         ArrayList<Transaction> transactionList = new ArrayList<>();
 
@@ -158,10 +164,10 @@ public class Reports {
 
         transactionList.sort(Comparator.comparing(Transaction::getDate).reversed());
 
-        if(transactionList.size() == 0) {
-            System.out.println(Utils.ANSI_RED +"\tThere are no entries from "+ userVendorSearch + Utils.ANSI_RESET);
+        if (transactionList.size() == 0) {
+            System.out.println(Utils.ANSI_RED + "\tThere are no transactions with " + userVendorSearch + Utils.ANSI_RESET);
         } else {
-            System.out.println(Utils.ANSI_PURPLE + "\t---Transactions from " + userVendorSearch + "---" + Utils.ANSI_RESET);
+            System.out.println(Utils.ANSI_PURPLE + "\t---TRANSACTIONS WITH " + userVendorSearch.toUpperCase() + "---" + Utils.ANSI_RESET);
 
             for (int i = 0; i < transactionList.size(); i++) {
                 Transaction t = transactionList.get(i);
