@@ -1,7 +1,5 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -34,6 +32,7 @@ public class Reports {
 
     public static void displayReportByDate(String userAction) {
 
+        //Print out Title based on user choice
         switch (userAction) {
             case "1" -> System.out.println(Utils.ANSI_PURPLE + "\t\t---TRANSACTIONS THIS MONTH---" + Utils.ANSI_RESET);
             case "2" -> System.out.println(Utils.ANSI_PURPLE + "\t\t---TRANSACTIONS LAST MONTH---" + Utils.ANSI_RESET);
@@ -41,19 +40,21 @@ public class Reports {
             case "4" -> System.out.println(Utils.ANSI_PURPLE + "\t\t---TRANSACTIONS LAST YEAR---" + Utils.ANSI_RESET);
         }
 
-        ArrayList<Transaction> transactions = loadReportByDate(userAction);
+        //Call loadReportByDate method and get back ArrayList
+        ArrayList<Transaction> transactionsList = loadReportByDate(userAction);
 
-        if (transactions.size() == 0) {
+        //Sort and print out ledger ArrayList there are objects in the ArrayList
+        if (transactionsList.isEmpty()) {
             System.out.println(Utils.ANSI_RED + "There are currently no transactions." + Utils.ANSI_RESET);
         } else {
             //Sort each object in the array list based on the date
-            transactions.sort(Comparator.comparing(Transaction::getDateTime).reversed());
+            transactionsList.sort(Comparator.comparing(Transaction::getDateTime).reversed());
 
-            //Loop through and print out each object(transaction) in transactions ArrayList
-            for (int i = 0; i < transactions.size(); i++) {
-                Transaction t = transactions.get(i);
+            //Loop through and print out each object(transaction) in ArrayList
+            for (int i = 0; i < transactionsList.size(); i++) {
+                Transaction t = transactionsList.get(i);
 
-                //Set the color based on deposit(green) or payment(red)
+                //Set the color of amount based on deposit(green) or payment(red)
                 String color ="";
                 if(t.getAmount() < 0) {
                     color = Utils.ANSI_RED;
@@ -71,61 +72,76 @@ public class Reports {
 
     private static ArrayList<Transaction> loadReportByDate(String userAction) {
 
+        //Get the local current month and year
         String thisMonth = Utils.getLocalMonth();
         String thisYear = Utils.getLocalYear();
 
-        ArrayList<Transaction> transactions = new ArrayList<>();
+        //Create new ArrayList
+        ArrayList<Transaction> transactionsList = new ArrayList<>();
 
         try {
+            //Open Buffered Reader to read file
             BufferedReader bufReader = new BufferedReader(new FileReader(Utils.logFile));
             String input;
 
+            //Read each filled out line of file
             while ((input = bufReader.readLine()) != null) {
+                //Split each line of data at the "|"
                 String[] lineData = input.split("\\|");
 
+                //Ignore blank lines or the header line
                 if (lineData[0].equals("") || lineData[0].equals("date")) {
                     continue;
                 }
 
+                //Store each lineData part in variables
                 String date = lineData[0];
                 String time = lineData[1];
                 String description = lineData[2];
                 String vendor = lineData[3];
                 double amount = Double.parseDouble(lineData[4]);
 
+                //Further split date (lineData[0])
                 String[] dateParts = date.split("-");
 
+                //Parse the month and year from the file and the current date
                 Integer intMonth = Integer.parseInt(dateParts[1]);
                 Integer intYear = Integer.parseInt(dateParts[0]);
                 Integer intCurrentMonth = Integer.parseInt(thisMonth);
                 Integer intCurrentYear = Integer.parseInt(thisYear);
 
+                //Create new instance of Transaction object with data from each line of file
                 Transaction newTransactions = new Transaction(date, time, description, vendor, amount);
 
+                //Add newTransactions object to ArrayList based on user request
                 switch (userAction) {
+                    //Adds only transactions from current month
                     case "1":
                         if (dateParts[1].equals(thisMonth) && dateParts[0].equals(thisYear)) {
-                            transactions.add(newTransactions);
+                            transactionsList.add(newTransactions);
                         }
                         break;
+                        //Adds only transactions from previous month
                     case "2":
                         //If current month is January, look at the last month of the previous year(December). Add to transLastMonth ArrayList.
                         //or if current month is not January, just look at previous month of this year. Add to transLastMonth ArrayList.
                         if ((intCurrentMonth == 01 && intYear == (intCurrentYear - 1) && intMonth == 12)
                                 || (dateParts[0].equals(thisYear) && intMonth == (intCurrentMonth - 1))) {
-                            transactions.add(newTransactions);
+                            transactionsList.add(newTransactions);
                         }
                         break;
+                        //Adds only transactions from the current year
                     case "3":
                         if (dateParts[0].equals(thisYear)) {
                             Transaction transThisMonth = new Transaction(date, time, description, vendor, amount);
-                            transactions.add(transThisMonth);
+                            transactionsList.add(transThisMonth);
                         }
                         break;
+                        //Adds only transactions from the previous year
                     case "4":
                         if (intYear == (intCurrentYear - 1)) {
                             Transaction transLastYear = new Transaction(date, time, description, vendor, amount);
-                            transactions.add(transLastYear);
+                            transactionsList.add(transLastYear);
                         }
                         break;
                 }
@@ -133,37 +149,45 @@ public class Reports {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        return transactions;
+        //Return ArrayList after requested objects are added
+        return transactionsList;
     }
 
     private static void searchByVendor() {
 
+        //Ask user for vendor to search
         String userVendorSearch = Utils.promptGetUserInput(Utils.ANSI_YELLOW + "Enter the vendor you would like to search: " + Utils.ANSI_RESET);
 
+        //Create ArrayList
         ArrayList<Transaction> transactionList = new ArrayList<>();
 
         try {
-
+            //Open Buffered Reader to read file
             BufferedReader bufReader = new BufferedReader(new FileReader(Utils.logFile));
             String input;
 
+            //Read each line of file that has data
             while ((input = bufReader.readLine()) != null) {
 
+                //Split data in file at "|"
                 String[] lineData = input.split("\\|");
 
-                if (lineData[0].equals("date")) {
+                //Ignore blank lines or the header line
+                if (lineData[0].equals("") || lineData[0].equals("date")) {
                     continue;
                 }
 
+                //Store each lineData part in variables
                 String date = lineData[0];
                 String time = lineData[1];
                 String description = lineData[2];
                 String vendor = lineData[3];
                 double amount = Double.parseDouble(lineData[4]);
 
+                //Create new instance of Transaction object with data from each line of file
                 Transaction newTransaction = new Transaction(date, time, description, vendor, amount);
 
+                //Add only the Transactions that match the vendor with user input
                 if (userVendorSearch.equalsIgnoreCase(vendor)) {
                     transactionList.add(newTransaction);
                 }
@@ -173,15 +197,19 @@ public class Reports {
             throw new RuntimeException(e);
         }
 
-        transactionList.sort(Comparator.comparing(Transaction::getDate).reversed());
-
-        if (transactionList.size() == 0) {
+        //Sort and print out ledger ArrayList there are objects in the ArrayList
+        if (transactionList.isEmpty()) {
             System.out.println(Utils.ANSI_RED + "\tThere are no transactions with " + userVendorSearch + Utils.ANSI_RESET);
         } else {
             System.out.println(Utils.ANSI_PURPLE + "\t---TRANSACTIONS WITH " + userVendorSearch.toUpperCase() + "---" + Utils.ANSI_RESET);
 
+            //Sort each object in the array list based on the date
+            transactionList.sort(Comparator.comparing(Transaction::getDate).reversed());
+
+            //Loop through and print out each object(transaction) in ArrayList
             for (int i = 0; i < transactionList.size(); i++) {
                 Transaction t = transactionList.get(i);
+
                 //Set the color based on deposit(green) or payment(red)
                 String color ="";
                 if(t.getAmount() < 0) {

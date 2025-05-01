@@ -92,23 +92,23 @@ public class Ledger {
                     continue;
                 }
 
-                //Create new Transaction object with data from each line of file
+                //Create new instance of Transaction object with data from each line of file
                 Transaction newTransaction = new Transaction(lineData[0], lineData[1], lineData[2], lineData[3], Double.parseDouble(lineData[4]));
 
                 //Add object to newTransaction ArrayList based on user request
                 //No default because this is an internal call with clean data
                 switch (userChoice) {
-                    //Shows all the transactions in the file
+                    //Adds all the transactions in the file
                     case "a":
                         transactionsList.add(newTransaction);
                         break;
-                    //Shows only the deposits in the file
+                    //Adds only the deposits in the file
                     case "d":
                         if (!lineData[4].startsWith("-")) {
                             transactionsList.add(newTransaction);
                         }
                         break;
-                    //Shows only the payments in the file
+                    //Adds only the payments in the file
                     case "p":
                         if (lineData[4].startsWith("-")) {
                             transactionsList.add(newTransaction);
@@ -119,7 +119,7 @@ public class Ledger {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        //Return the ArrayList
+        //Return ArrayList after requested objects are added
         return transactionsList;
     }
 }
