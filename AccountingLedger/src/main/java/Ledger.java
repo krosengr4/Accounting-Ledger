@@ -1,5 +1,3 @@
-import jdk.jshell.execution.Util;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -24,6 +22,7 @@ public class Ledger {
                 case "a", "d", "p" -> sortAndPrintLedger(userChoice);
                 case "r" -> {
                     userInputFromReports = Reports.displayReportsScreen();
+                    //If user chooses "Go to Main Page" from the ledger page, don't continue this loop
                     if (userInputFromReports.equalsIgnoreCase("h")) {
                         ifContinue = false;
                     }
@@ -36,23 +35,26 @@ public class Ledger {
 
     public static void sortAndPrintLedger(String userChoice) {
 
+        //Switch statement to print out correct title based on user choice
         switch (userChoice) {
             case "a" -> System.out.println(Utils.ANSI_PURPLE + "\t\t---ALL TRANSACTIONS---" + Utils.ANSI_RESET);
             case "d" -> System.out.println(Utils.ANSI_GREEN + "\t\t---ALL DEPOSITS---" + Utils.ANSI_RESET);
             case "p" -> System.out.println(Utils.ANSI_RED + "\t\t---ALL PAYMENTS---" + Utils.ANSI_RESET);
         }
 
-        ArrayList<Transaction> ledger = loadLedger(userChoice);
+        //Calls loadLedger() method and gets back ArrayList
+        ArrayList<Transaction> transactionsList = loadLedger(userChoice);
 
-        if (ledger.size() == 0) {
+        //Sort and print out ledger ArrayList there are objects in the ArrayList
+        if (transactionsList.size() == 0) {
             System.out.println(Utils.ANSI_RED + "There are currently no transactions." + Utils.ANSI_RESET);
         } else {
             //Sort each object in the array list based on the date and time
-            ledger.sort(Comparator.comparing(Transaction::getDateTime).reversed());
+            transactionsList.sort(Comparator.comparing(Transaction::getDateTime).reversed());
 
             //loop through array list and print out each object(transaction) in ledger Array List
-            for (int i = 0; i < ledger.size(); i++) {
-                Transaction t = ledger.get(i);
+            for (int i = 0; i < transactionsList.size(); i++) {
+                Transaction t = transactionsList.get(i);
                 System.out.printf("%s|%s|%s|%s|%.2f \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
             }
         }
@@ -62,14 +64,17 @@ public class Ledger {
 
     public static ArrayList<Transaction> loadLedger(String userChoice) {
 
-        ArrayList<Transaction> ledger = new ArrayList<>();
+        //Create empty ArrayList
+        ArrayList<Transaction> transactionsList = new ArrayList<>();
 
         try {
-            FileReader reader = new FileReader(Utils.logFile);
-            BufferedReader bufReader = new BufferedReader(reader);
+            //Open Buffered Reader
+            BufferedReader bufReader = new BufferedReader(new FileReader(Utils.logFile));
             String input;
 
+            //While the line isn't null read each line of file
             while ((input = bufReader.readLine()) != null) {
+                //Split each line at the "|"
                 String[] lineData = input.split("\\|");
 
                 //Ignore blank lines or the header line
@@ -77,6 +82,7 @@ public class Ledger {
                     continue;
                 }
 
+                //Create new Transaction object with data from each line of file
                 Transaction newTransaction = new Transaction(lineData[0], lineData[1], lineData[2], lineData[3], Double.parseDouble(lineData[4]));
 
                 //Add object to newTransaction ArrayList based on user request
@@ -84,18 +90,18 @@ public class Ledger {
                 switch (userChoice) {
                     //Shows all the transactions in the file
                     case "a":
-                        ledger.add(newTransaction);
+                        transactionsList.add(newTransaction);
                         break;
                     //Shows only the deposits in the file
                     case "d":
                         if (!lineData[4].startsWith("-")) {
-                            ledger.add(newTransaction);
+                            transactionsList.add(newTransaction);
                         }
                         break;
                     //Shows only the payments in the file
                     case "p":
                         if (lineData[4].startsWith("-")) {
-                            ledger.add(newTransaction);
+                            transactionsList.add(newTransaction);
                         }
                         break;
                 }
@@ -103,7 +109,7 @@ public class Ledger {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        return ledger;
+        //Return the ArrayList
+        return transactionsList;
     }
 }

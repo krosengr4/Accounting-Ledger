@@ -61,6 +61,6 @@ public class Transaction {
 
 //    @Override
 //    public int compareTo(Transaction other) {
-//        return this.localDateTime.compareTo(other.localDateTime);
+//        return this.getDateTime().compareTo(other.getDateTime());
 //    }
 }
