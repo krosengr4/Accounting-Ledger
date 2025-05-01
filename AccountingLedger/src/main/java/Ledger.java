@@ -45,7 +45,7 @@ public class Ledger {
         //Calls loadLedger() method and gets back ArrayList
         ArrayList<Transaction> transactionsList = loadLedger(userChoice);
 
-        String color="";
+
 
         //Sort and print out ledger ArrayList there are objects in the ArrayList
         if (transactionsList.size() == 0) {
@@ -59,12 +59,10 @@ public class Ledger {
                 Transaction t = transactionsList.get(i);
 
                 //Set the color based on deposit(green) or payment(red)
-                if(t.getAmount() < 0) {
-                    color = Utils.ANSI_RED;
+                String color="";
+                if(t.getAmount() < 0) {color = Utils.ANSI_RED;
                 } else {
-                    if(t.getAmount() > 0) {
-                        color = Utils.ANSI_GREEN;
-                    }
+                    if(t.getAmount() > 0) {color = Utils.ANSI_GREEN;}
                 }
 
                 System.out.printf("%s|%s|%s|%s|%s%.2f%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), color, t.getAmount(), Utils.ANSI_RESET);

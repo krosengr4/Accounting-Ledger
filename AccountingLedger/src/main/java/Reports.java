@@ -43,7 +43,6 @@ public class Reports {
 
         ArrayList<Transaction> transactions = loadReportByDate(userAction);
 
-
         if (transactions.size() == 0) {
             System.out.println(Utils.ANSI_RED + "There are currently no transactions." + Utils.ANSI_RESET);
         } else {
@@ -53,7 +52,17 @@ public class Reports {
             //Loop through and print out each object(transaction) in transactions ArrayList
             for (int i = 0; i < transactions.size(); i++) {
                 Transaction t = transactions.get(i);
-                System.out.printf("%s|%s|%s|%s|%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+
+                //Set the color based on deposit(green) or payment(red)
+                String color ="";
+                if(t.getAmount() < 0) {
+                    color = Utils.ANSI_RED;
+                } else {
+                    if(t.getAmount() > 0) {
+                        color = Utils.ANSI_GREEN;
+                    }
+                }
+                System.out.printf("%s|%s|%s|%s|%s%.2f%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), color, t.getAmount(), Utils.ANSI_RESET);
             }
         }
         //Pause the app until user hits continue
@@ -173,7 +182,16 @@ public class Reports {
 
             for (int i = 0; i < transactionList.size(); i++) {
                 Transaction t = transactionList.get(i);
-                System.out.printf("%s|%s|%s|%s|%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+                //Set the color based on deposit(green) or payment(red)
+                String color ="";
+                if(t.getAmount() < 0) {
+                    color = Utils.ANSI_RED;
+                } else {
+                    if(t.getAmount() > 0) {
+                        color = Utils.ANSI_GREEN;
+                    }
+                }
+                System.out.printf("%s|%s|%s|%s|%s%.2f%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), color, t.getAmount(), Utils.ANSI_RESET);
             }
         }
         //Pause the app until user hits continue
