@@ -51,8 +51,8 @@ public class Reports {
             transactionsList.sort(Comparator.comparing(Transaction::getDateTime).reversed());
 
             //Loop through and print out each object(transaction) in ArrayList
-            for (int i = 0; i < transactionsList.size(); i++) {
-                Transaction t = transactionsList.get(i);
+            for (Transaction t : transactionsList) {
+//                Transaction t = transactionsList.get(t);
 
                 //Set the color of amount based on deposit(green) or payment(red)
                 String color ="";
@@ -90,7 +90,7 @@ public class Reports {
                 String[] lineData = input.split("\\|");
 
                 //Ignore blank lines or the header line
-                if (lineData[0].equals("") || lineData[0].equals("date")) {
+                if (lineData[0].isEmpty() || lineData[0].equals("date")) {
                     continue;
                 }
 
@@ -173,7 +173,7 @@ public class Reports {
                 String[] lineData = input.split("\\|");
 
                 //Ignore blank lines or the header line
-                if (lineData[0].equals("") || lineData[0].equals("date")) {
+                if (lineData[0].isEmpty() || lineData[0].equals("date")) {
                     continue;
                 }
 
@@ -207,8 +207,7 @@ public class Reports {
             transactionList.sort(Comparator.comparing(Transaction::getDate).reversed());
 
             //Loop through and print out each object(transaction) in ArrayList
-            for (int i = 0; i < transactionList.size(); i++) {
-                Transaction t = transactionList.get(i);
+            for (Transaction t : transactionList) {
 
                 //Set the color based on deposit(green) or payment(red)
                 String color ="";
