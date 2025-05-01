@@ -42,7 +42,7 @@ public class Ledger {
 
         ArrayList<Transaction> ledger = loadLedger(userChoice);
 
-        //Sort each object in the array list based on the date
+        //Sort each object in the array list based on the date and time
         ledger.sort(Comparator.comparing(Transaction::getDateTime));
 
         for (int i = 0; i < ledger.size(); i++) {
@@ -63,28 +63,32 @@ public class Ledger {
             while ((input = bufReader.readLine()) != null) {
                 String[] lineData = input.split("\\|");
 
-                if (lineData[0].equals("date")) {
+                //Ignore blank lines or the header line
+                if (lineData[0].equals("") || lineData[0].equals("date")) {
                     continue;
                 }
 
                 Transaction newTransaction = new Transaction(lineData[0], lineData[1], lineData[2], lineData[3], Double.parseDouble(lineData[4]));
 
+                //Add object to newTransaction ArrayList based on user request
+                //No default because this is an internal call with clean data
                 switch (userChoice) {
+                    //Shows all the transactions in the file
                     case "a":
                         ledger.add(newTransaction);
                         break;
+                    //Shows only the deposits in the file
                     case "d":
-                        if (lineData[4].startsWith("-")) {
-                            continue;
-                        } else {
+                        if (!lineData[4].startsWith("-")) {
                             ledger.add(newTransaction);
-                            break;
                         }
+                        break;
+                    //Shows only the payments in the file
                     case "p":
                         if (lineData[4].startsWith("-")) {
                             ledger.add(newTransaction);
-                            break;
                         }
+                        break;
                 }
             }
         } catch (Exception e) {
