@@ -56,6 +56,8 @@ public class Reports {
                 System.out.printf("%s|%s|%s|%s|%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
             }
         }
+        //Pause the app until user hits continue
+        Utils.pauseApp();
     }
 
     private static ArrayList<Transaction> loadReportByDate(String userAction) {
@@ -174,5 +176,7 @@ public class Reports {
                 System.out.printf("%s|%s|%s|%s|%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
             }
         }
+        //Pause the app until user hits continue
+        Utils.pauseApp();
     }
 }
