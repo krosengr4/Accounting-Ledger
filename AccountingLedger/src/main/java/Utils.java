@@ -4,10 +4,12 @@ import java.util.Scanner;
 
 public class Utils {
 
+    static Scanner myScanner = new Scanner(System.in);
+
     //public file to Write to
     public static String logFile = "AccountingLedger/src/main/resources/transactions.csv";
 
-    //Colors for printing out colored messages
+    //region Colors for printing out colored messages
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -17,8 +19,7 @@ public class Utils {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
-
-    static Scanner myScanner = new Scanner(System.in);
+    //endregion
 
     //prompt user, then get and return user input
     static String promptGetUserInput(String message) {
@@ -27,11 +28,13 @@ public class Utils {
         return userInput.trim();
     }
 
+    //Pauses the app until user hits Enter
     public static void pauseApp() {
         System.out.println("\nPress Enter to Continue...");
         myScanner.nextLine();
     }
 
+    //Returns current year as "yyyy"
     public static String getLocalYear() {
         LocalDate todayDate = LocalDate.now();
         DateTimeFormatter year = DateTimeFormatter.ofPattern("yyyy");
@@ -39,6 +42,7 @@ public class Utils {
         return thisYear;
     }
 
+    //Returns current month as "MM"
     public static String getLocalMonth() {
         LocalDate todayDate = LocalDate.now();
         DateTimeFormatter month = DateTimeFormatter.ofPattern("MM");
