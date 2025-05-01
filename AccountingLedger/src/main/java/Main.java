@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 
 public class Main {
 
-
     public static void main(String[] args) {
         System.out.println(Utils.ANSI_BLUE + "\n\t\t--------------------WELCOME TO THE ACCOUNTING LEDGER!--------------------" + Utils.ANSI_RESET);
         displayHomeScreen();

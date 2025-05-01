@@ -18,19 +18,24 @@ public class Utils {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
+    static Scanner myScanner = new Scanner(System.in);
+
     //prompt user, then get and return user input
     static String promptGetUserInput(String message) {
-        Scanner myScanner = new Scanner(System.in);
         System.out.println(message);
         String userInput = myScanner.nextLine();
         return userInput.trim();
+    }
+
+    public static void pauseApp() {
+        System.out.println("\nPress Enter to Continue...");
+        myScanner.nextLine();
     }
 
     public static String getLocalYear() {
         LocalDate todayDate = LocalDate.now();
         DateTimeFormatter year = DateTimeFormatter.ofPattern("yyyy");
         String thisYear = todayDate.format(year);
-
         return thisYear;
     }
 
@@ -38,8 +43,6 @@ public class Utils {
         LocalDate todayDate = LocalDate.now();
         DateTimeFormatter month = DateTimeFormatter.ofPattern("MM");
         String thisMonth = todayDate.format(month);
-
         return thisMonth;
     }
-
 }
