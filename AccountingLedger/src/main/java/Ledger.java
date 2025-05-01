@@ -45,7 +45,7 @@ public class Ledger {
         ArrayList<Transaction> ledger = loadLedger(userChoice);
 
         //Sort each object in the array list based on the date and time
-        ledger.sort(Comparator.comparing(Transaction::getDateTime));
+        ledger.sort(Comparator.comparing(Transaction::getDateTime).reversed());
 
         for (int i = 0; i < ledger.size(); i++) {
             Transaction t = ledger.get(i);

@@ -44,7 +44,7 @@ public class Reports {
         ArrayList<Transaction> transactions = loadReportByDate(userAction);
 
         //Sort each object in the array list based on the date
-        transactions.sort(Comparator.comparing(Transaction::getDateTime));
+        transactions.sort(Comparator.comparing(Transaction::getDateTime).reversed());
 
         for (int i = 0; i < transactions.size(); i++) {
             Transaction t = transactions.get(i);
@@ -122,7 +122,7 @@ public class Reports {
 
     private static void searchByVendor() {
 
-        String userVendorSearch = Utils.promptGetUserInput("Enter the vendor you would like to search: ");
+        String userVendorSearch = Utils.promptGetUserInput(Utils.ANSI_YELLOW +"Enter the vendor you would like to search: "+ Utils.ANSI_RESET);
 
         ArrayList<Transaction> transactionList = new ArrayList<>();
 
@@ -156,11 +156,17 @@ public class Reports {
             throw new RuntimeException(e);
         }
 
-        transactionList.sort(Comparator.comparing(Transaction::getDate));
+        transactionList.sort(Comparator.comparing(Transaction::getDate).reversed());
 
-        for (int i = 0; i < transactionList.size(); i++) {
-            Transaction t = transactionList.get(i);
-            System.out.printf("%s|%s|%s|%s|%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+        if(transactionList.size() == 0) {
+            System.out.println(Utils.ANSI_RED +"\tThere are no entries from "+ userVendorSearch + Utils.ANSI_RESET);
+        } else {
+            System.out.println(Utils.ANSI_PURPLE + "\t---Transactions from " + userVendorSearch + "---" + Utils.ANSI_RESET);
+
+            for (int i = 0; i < transactionList.size(); i++) {
+                Transaction t = transactionList.get(i);
+                System.out.printf("%s|%s|%s|%s|%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
+            }
         }
     }
 }
