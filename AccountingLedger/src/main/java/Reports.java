@@ -14,7 +14,7 @@ public class Reports {
 
         // This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
         while (ifContinue) {
-            System.out.println("\n\t-----LEDGER REPORT-----");
+            System.out.println(Utils.ANSI_BLUE +"\n\t-----LEDGER REPORT-----"+ Utils.ANSI_RESET);
 
             //Get user input
             System.out.println("SORT REPORT BY: \n1 - Transactions this Month \n2 - Transactions last Month \n3 - Transactions this Year " +

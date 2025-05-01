@@ -13,7 +13,7 @@ public class Ledger {
         //This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
         while (ifContinue) {
             //Get user input
-            System.out.println("\n\t-----LEDGER-----");
+            System.out.println(Utils.ANSI_BLUE +"\n\t-----LEDGER-----"+ Utils.ANSI_RESET);
             System.out.println("OPTIONS: \nA - Display all entries \nD - Display deposits \nP - Display payments \nR - Go to Reports Screen \nH - Return to Home Screen");
             userChoice = Utils.promptGetUserInput("What would you like to do?: ").toLowerCase();
 
@@ -96,6 +96,5 @@ public class Ledger {
         }
 
         return ledger;
-
     }
 }

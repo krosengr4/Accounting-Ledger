@@ -41,7 +41,7 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
         //This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
         while (ifContinue) {
             //Get user action input
-            System.out.println("\n\t-----MAIN MENU-----");
+            System.out.println(Utils.ANSI_BLUE +"\n\t-----MAIN MENU-----"+ Utils.ANSI_RESET);
             System.out.println("Enter the letter associated with the desired action\nD - Add a deposit \nP - Make a payment(debit) \nL - Go to Ledger Screen \nX - Exit the Ledger Application");
             userChoice = Utils.promptGetUserInput("What would you like to do?: ").toLowerCase();
 
