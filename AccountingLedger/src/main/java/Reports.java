@@ -17,9 +17,9 @@ public class Reports {
             System.out.println(Utils.ANSI_BLUE +"\n\t-----LEDGER REPORT-----"+ Utils.ANSI_RESET);
 
             //Get user input
-            System.out.println("SORT REPORT BY: \n1 - Transactions this Month \n2 - Transactions last Month \n3 - Transactions this Year " +
-                    "\n4 - Transactions last Year \n5 - Search by Vendor \n0 - Go back to Ledger Screen \nH - Return to Home Screen");
-            userAction = Utils.promptGetUserInput("What would you like to do?: ").toLowerCase();
+            System.out.println(Utils.ANSI_YELLOW +"SORT REPORT BY:"+ Utils.ANSI_RESET +"\n1 - Transactions this Month \n2 - Transactions last Month \n3 - Transactions this Year " +
+                    "\n4 - Transactions last Year \n5 - Search by Vendor \n0 - Go back to Ledger Screen \nH - Return to Main Menu");
+            userAction = Utils.promptGetUserInput(Utils.ANSI_YELLOW +"What would you like to do?: "+ Utils.ANSI_RESET).toLowerCase();
 
             // call correct method that follows users action input
             switch (userAction) {
@@ -35,10 +35,10 @@ public class Reports {
     public static void displayReportByDate(String userAction) {
 
         switch (userAction) {
-            case "1" -> System.out.println("\t\t---TRANSACTIONS THIS MONTH---");
-            case "2" -> System.out.println("\t\t---TRANSACTIONS LAST MONTH---");
-            case "3" -> System.out.println("\t\t---TRANSACTIONS THIS YEAR---");
-            case "4" -> System.out.println("\t\t---TRANSACTIONS LAST YEAR---");
+            case "1" -> System.out.println(Utils.ANSI_PURPLE +"\t\t---TRANSACTIONS THIS MONTH---"+ Utils.ANSI_RESET);
+            case "2" -> System.out.println(Utils.ANSI_PURPLE +"\t\t---TRANSACTIONS LAST MONTH---"+ Utils.ANSI_RESET);
+            case "3" -> System.out.println(Utils.ANSI_PURPLE +"\t\t---TRANSACTIONS THIS YEAR---"+ Utils.ANSI_RESET);
+            case "4" -> System.out.println(Utils.ANSI_PURPLE +"\t\t---TRANSACTIONS LAST YEAR---"+ Utils.ANSI_RESET);
         }
 
         ArrayList<Transaction> transactions = loadReportByDate(userAction);

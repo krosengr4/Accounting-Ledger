@@ -1,3 +1,5 @@
+import jdk.jshell.execution.Util;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -14,8 +16,8 @@ public class Ledger {
         while (ifContinue) {
             //Get user input
             System.out.println(Utils.ANSI_BLUE +"\n\t-----LEDGER-----"+ Utils.ANSI_RESET);
-            System.out.println("OPTIONS: \nA - Display all entries \nD - Display deposits \nP - Display payments \nR - Go to Reports Screen \nH - Return to Home Screen");
-            userChoice = Utils.promptGetUserInput("What would you like to do?: ").toLowerCase();
+            System.out.println(Utils.ANSI_YELLOW +"OPTIONS:" + Utils.ANSI_RESET+"\nA - Display all entries \nD - Display deposits \nP - Display payments \nR - Go to Reports Screen \nH - Return to Main Menu");
+            userChoice = Utils.promptGetUserInput(Utils.ANSI_YELLOW +"What would you like to do?: ").toLowerCase();
 
             // call correct method that follows users action input
             switch (userChoice) {
@@ -35,9 +37,9 @@ public class Ledger {
     public static void sortAndPrintLedger(String userChoice) {
 
         switch (userChoice) {
-            case "a" -> System.out.println("\t\t---ALL TRANSACTIONS---");
-            case "d" -> System.out.println("\t\t---ALL DEPOSITS---");
-            case "p" -> System.out.println("\t\t---ALL PAYMENTS---");
+            case "a" -> System.out.println(Utils.ANSI_CYAN +"\t\t---ALL TRANSACTIONS---"+ Utils.ANSI_RESET);
+            case "d" -> System.out.println(Utils.ANSI_GREEN +"\t\t---ALL DEPOSITS---"+ Utils.ANSI_RESET);
+            case "p" -> System.out.println(Utils.ANSI_RED +"\t\t---ALL PAYMENTS---"+ Utils.ANSI_RESET);
         }
 
         ArrayList<Transaction> ledger = loadLedger(userChoice);

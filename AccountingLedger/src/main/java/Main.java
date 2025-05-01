@@ -30,7 +30,7 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
     public static String logFile = "AccountingLedger/src/main/resources/transactions.csv";
 
     public static void main(String[] args) {
-        System.out.println("\n\t\t--------------------WELCOME TO THE ACCOUNTING LEDGER!--------------------");
+        System.out.println(Utils.ANSI_BLUE +"\n\t\t--------------------WELCOME TO THE ACCOUNTING LEDGER!--------------------"+ Utils.ANSI_RESET);
         displayHomeScreen();
     }
 
@@ -40,10 +40,11 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
 
         //This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
         while (ifContinue) {
-            //Get user action input
+
             System.out.println(Utils.ANSI_BLUE +"\n\t-----MAIN MENU-----"+ Utils.ANSI_RESET);
-            System.out.println("Enter the letter associated with the desired action\nD - Add a deposit \nP - Make a payment(debit) \nL - Go to Ledger Screen \nX - Exit the Ledger Application");
-            userChoice = Utils.promptGetUserInput("What would you like to do?: ").toLowerCase();
+            //Get user action input
+            System.out.println(Utils.ANSI_YELLOW +"Enter the letter associated with the desired action"+ Utils.ANSI_RESET +"\nD - Add a deposit \nP - Make a payment(debit) \nL - Go to Ledger Screen \nX - Exit the Ledger Application");
+            userChoice = Utils.promptGetUserInput(Utils.ANSI_YELLOW +"What would you like to do?: "+ Utils.ANSI_RESET).toLowerCase();
 
             // call correct method that follows users action input
             switch (userChoice) {
@@ -51,7 +52,7 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
                 case "p" -> makePayment();
                 case "l" -> Ledger.displayLedgerScreen();
                 case "x" -> {
-                    System.out.println("Thank you for using the Accounting Ledger!\n\tSee you soon :)");
+                    System.out.println(Utils.ANSI_CYAN +"Thank you for using the Accounting Ledger!\n\tSee you soon :)"+ Utils.ANSI_RESET);
                     ifContinue = false;
                 }
                 default -> System.err.println("ERROR! Please enter one of the letters listed");
@@ -76,7 +77,7 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
             writer.write("\n" + logDateTime + "|" + userDescription + "|" + userVendor + "|" + userAmount);
             writer.close();
             System.out.printf("%s|%s|%s|%.2f\n", logDateTime, userDescription, userVendor, userAmount);
-            System.out.println("Success! Deposit transaction logged!");
+            System.out.println(Utils.ANSI_GREEN +"Success! Deposit transaction logged!"+ Utils.ANSI_RESET);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -102,7 +103,7 @@ R) Reports - A new screen that allows the user to run pre-defined reports or to 
             writer.close();
 
             System.out.printf("%s|%s|%s|-%.2f\n", logDateTime, userDescription, userVendor, userAmount);
-            System.out.println("Success! Deposit transaction logged!");
+            System.out.println(Utils.ANSI_GREEN +"Success! Payment transaction logged!"+ Utils.ANSI_RESET);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
