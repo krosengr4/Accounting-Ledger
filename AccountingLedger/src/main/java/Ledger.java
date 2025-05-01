@@ -55,6 +55,9 @@ public class Ledger {
                 Transaction t = ledger.get(i);
                 System.out.printf("%s|%s|%s|%s|%.2f \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), t.getAmount());
             }
+
+            //Pause the app until user hits continue
+            Utils.pauseApp();
         }
     }
 
