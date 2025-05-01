@@ -8,7 +8,7 @@ public class Ledger {
     public static void displayLedgerScreen() {
         boolean ifContinue = true;
         String userChoice;
-        String userInputFromReports = "";
+        String userInputFromReports;
 
         //This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
         while (ifContinue) {
@@ -48,15 +48,14 @@ public class Ledger {
 
 
         //Sort and print out ledger ArrayList there are objects in the ArrayList
-        if (transactionsList.size() == 0) {
+        if (transactionsList.isEmpty()) {
             System.out.println(Utils.ANSI_RED + "There are currently no transactions." + Utils.ANSI_RESET);
         } else {
             //Sort each object in the array list based on the date and time
             transactionsList.sort(Comparator.comparing(Transaction::getDateTime).reversed());
 
             //loop through array list and print out each object(transaction) in ledger Array List
-            for (int i = 0; i < transactionsList.size(); i++) {
-                Transaction t = transactionsList.get(i);
+            for (Transaction t : transactionsList) {
 
                 //Set the color based on deposit(green) or payment(red)
                 String color="";
@@ -88,7 +87,7 @@ public class Ledger {
                 String[] lineData = input.split("\\|");
 
                 //Ignore blank lines or the header line
-                if (lineData[0].equals("") || lineData[0].equals("date")) {
+                if (lineData[0].isEmpty() || lineData[0].equals("date")) {
                     continue;
                 }
 
