@@ -46,26 +46,29 @@ public class Ledger {
         ArrayList<Transaction> transactionsList = loadLedger(userChoice);
 
 
-
         //Sort and print out ledger ArrayList there are objects in the ArrayList
         if (transactionsList.isEmpty()) {
             System.out.println(Utils.ANSI_RED + "There are currently no transactions." + Utils.ANSI_RESET);
-        } else {
-            //Sort each object in the array list based on the date and time
-            transactionsList.sort(Comparator.comparing(Transaction::getDateTime).reversed());
+            Utils.pauseApp();
+            return;
+        }
+        //Sort each object in the array list based on the date and time
+        transactionsList.sort(Comparator.comparing(Transaction::getDateTime).reversed());
 
-            //loop through array list and print out each object(transaction) in ledger Array List
-            for (Transaction t : transactionsList) {
+        //loop through array list and print out each object(transaction) in ledger Array List
+        for (Transaction t : transactionsList) {
 
-                //Set the color based on deposit(green) or payment(red)
-                String color="";
-                if(t.getAmount() < 0) {color = Utils.ANSI_RED;
-                } else {
-                    if(t.getAmount() > 0) {color = Utils.ANSI_GREEN;}
+            //Set the color based on deposit(green) or payment(red)
+            String color = "";
+            if (t.getAmount() < 0) {
+                color = Utils.ANSI_RED;
+            } else {
+                if (t.getAmount() > 0) {
+                    color = Utils.ANSI_GREEN;
                 }
-
-                System.out.printf("%s|%s|%s|%s|%s%.2f%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), color, t.getAmount(), Utils.ANSI_RESET);
             }
+
+            System.out.printf("%s|%s|%s|%s|%s%.2f%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), color, t.getAmount(), Utils.ANSI_RESET);
         }
         //Pause the app until user hits continue
         Utils.pauseApp();
