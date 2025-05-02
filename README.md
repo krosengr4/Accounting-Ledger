@@ -23,7 +23,7 @@ From the Ledger Screen a user can display all of their transactions, display onl
 From the Report Screen a user can display their transactions from the current month, the previous month, the current year, and the previous year. A user can also search a transaction by the name of the vendor. Lastly, a user can navigate back to the Ledger Screen, or navigate back to the Main Menu Screen.
 
 ## Images
-<<<<<<< HEAD
+
 #### Main Menu Screen
 ![img_2.png](AccountingLedger/images/mainMenu.png)
 #### Displaying all Transactions in Ledger Screen
