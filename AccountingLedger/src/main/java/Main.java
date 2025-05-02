@@ -53,6 +53,7 @@ public class Main {
             System.out.printf("%s|%s|%s|%.2f\n", logDateTime, userDescription, userVendor, userAmount);
             System.out.println(Utils.ANSI_GREEN + "Success! Deposit transaction logged!" + Utils.ANSI_RESET);
 
+            Utils.pauseApp();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -79,6 +80,7 @@ public class Main {
             System.out.printf("%s|%s|%s|-%.2f\n", logDateTime, userDescription, userVendor, userAmount);
             System.out.println(Utils.ANSI_GREEN + "Success! Payment transaction logged!" + Utils.ANSI_RESET);
 
+            Utils.pauseApp();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

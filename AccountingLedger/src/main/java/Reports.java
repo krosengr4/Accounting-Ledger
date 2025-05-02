@@ -46,29 +46,27 @@ public class Reports {
         //Sort and print out ledger ArrayList there are objects in the ArrayList
         if (transactionsList.isEmpty()) {
             System.out.println(Utils.ANSI_RED + "There are currently no transactions." + Utils.ANSI_RESET);
-            Utils.pauseApp();
-            return;
-        }
-        //Sort each object in the array list based on the date
-        transactionsList.sort(Comparator.comparing(Transaction::getDateTime).reversed());
+        } else {
+            //Sort each object in the array list based on the date. Required newest first (2025 before 2024)
+            transactionsList.sort(Comparator.comparing(Transaction::getDateTime).reversed());
 
-        //Loop through and print out each object(transaction) in ArrayList
-        for (Transaction t : transactionsList) {
-//                Transaction t = transactionsList.get(t);
+            //Loop through and print out each object(transaction) in ArrayList
+            for (Transaction t : transactionsList) {
 
-            //Set the color of amount based on deposit(green) or payment(red)
-            String color = "";
-            if (t.getAmount() < 0) {
-                color = Utils.ANSI_RED;
-            } else {
-                if (t.getAmount() > 0) {
-                    color = Utils.ANSI_GREEN;
+                //Set the color of amount based on deposit(green) or payment(red)
+                String color = "";
+                if (t.getAmount() < 0) {
+                    color = Utils.ANSI_RED;
+                } else {
+                    if (t.getAmount() > 0) {
+                        color = Utils.ANSI_GREEN;
+                    }
                 }
+                System.out.printf("%s|%s|%s|%s|%s%.2f%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), color, t.getAmount(), Utils.ANSI_RESET);
             }
-            System.out.printf("%s|%s|%s|%s|%s%.2f%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), color, t.getAmount(), Utils.ANSI_RESET);
+            //Pause the app until user hits continue
+            Utils.pauseApp();
         }
-        //Pause the app until user hits continue
-        Utils.pauseApp();
     }
 
     private static ArrayList<Transaction> loadReportByDate(String userAction) {
@@ -134,15 +132,13 @@ public class Reports {
                     //Adds only transactions from the current year
                     case "3":
                         if (dateParts[0].equals(thisYear)) {
-                            Transaction transThisMonth = new Transaction(date, time, description, vendor, amount);
-                            transactionsList.add(transThisMonth);
+                            transactionsList.add(newTransactions);
                         }
                         break;
                     //Adds only transactions from the previous year
                     case "4":
                         if (intYear == (intCurrentYear - 1)) {
-                            Transaction transLastYear = new Transaction(date, time, description, vendor, amount);
-                            transactionsList.add(transLastYear);
+                            transactionsList.add(newTransactions);
                         }
                         break;
                 }
@@ -204,7 +200,7 @@ public class Reports {
         } else {
             System.out.println(Utils.ANSI_PURPLE + "\t---TRANSACTIONS WITH " + userVendorSearch.toUpperCase() + "---" + Utils.ANSI_RESET);
 
-            //Sort each object in the array list based on the date
+            //Sort each object in the array list based on the date. Required newest first (2025 before 2024)
             transactionList.sort(Comparator.comparing(Transaction::getDate).reversed());
 
             //Loop through and print out each object(transaction) in ArrayList
