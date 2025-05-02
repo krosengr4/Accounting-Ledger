@@ -1,4 +1,4 @@
-# capstone-1
+# Accounting Ledger
 
 ## Table of Contents
 - [Description](#description)
