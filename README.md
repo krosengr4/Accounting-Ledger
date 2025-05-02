@@ -10,7 +10,7 @@
 - [Questions](#questions)
 
 ## Description
-The Accounting Ledger application is a command line application that will log and display a users financial transactions. This application logs the date, time, description, vendor, and amount of a transaction. When displaying transactions, a user can customize the transactions that are displayed, and the payment amount is red and deposit amount is green. The application will also display newest transactions first and oldest last. 
+The Accounting Ledger application is a command line application, created using Java, that will log and display a users financial transactions. This application logs the date, time, description, vendor, and amount of a transaction. When displaying transactions, a user can customize the transactions that are displayed, and the payment amount is red and deposit amount is green. The application will also display newest transactions first and oldest last. 
 
 This application contains 3 screens a user can navigate through: The Main Menu Screen, The Ledger Screen, and The Report Screen. 
 ____
