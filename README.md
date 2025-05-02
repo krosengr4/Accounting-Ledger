@@ -15,11 +15,11 @@ view their transactions based on deposits and payments, and the transactions thi
 
 ## Images
 ### Image 1:
-![img_2.png](img_2.png)
+![img_2.png](AccountingLedger/images/mainMenu.png)
 ### Image 2:
-![img.png](img.png)
+![img.png](AccountingLedger/images/ledgerAllTransaction.png)
 ### Image 3:
-![img_1.png](img_1.png)
+![img_1.png](AccountingLedger/images/lastMonthTransReportScreen.png)
 
 
 ## Usage
