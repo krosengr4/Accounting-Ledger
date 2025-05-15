@@ -1,7 +1,5 @@
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class Main {
 
@@ -25,8 +23,7 @@ public class Main {
 
             // call correct method that follows users action input
             switch (userChoice) {
-                case "d" -> addDeposit();
-                case "p" -> makePayment();
+                case "d", "p" -> addTransaction(userChoice);
                 case "l" -> Ledger.displayLedgerScreen();
                 case "x" -> ifContinue = false;
                 default -> System.err.println("ERROR! Please enter one of the letters listed");
@@ -34,56 +31,33 @@ public class Main {
         }
     }
 
-    private static void addDeposit() {
-        //Get user input
-        String userDescription = Utils.promptGetUserInput("What is the deposit description?: ");
-        String userVendor = Utils.promptGetUserInput("What the is deposit vendor?: ");
-        Double userAmount = Double.parseDouble(Utils.promptGetUserInput("What is the deposit amount?: "));
+    private static void addTransaction(String userChoice) {
+        String logDateTime = Utils.getFullDate();
 
-        //Get and format the date and time
-        LocalDateTime dateTime = LocalDateTime.now();
-        DateTimeFormatter formattedDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
-        String logDateTime = dateTime.format(formattedDateTime);
-
-        //Open the file writer
-        try {
-            FileWriter writer = new FileWriter(Utils.logFile, true);
-            writer.write("\n" + logDateTime + "|" + userDescription + "|" + userVendor + "|" + userAmount);
-            writer.close();
-            System.out.printf("%s|%s|%s|%.2f\n", logDateTime, userDescription, userVendor, userAmount);
-            System.out.println(Utils.ANSI_GREEN + "Success! Deposit transaction logged!" + Utils.ANSI_RESET);
-
-            Utils.pauseApp();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void makePayment() {
-        //To add a payment well need file writer
-        System.out.println("Make a payment");
-
-        String userDescription = Utils.promptGetUserInput("What is the payment description?: ");
-        String userVendor = Utils.promptGetUserInput("What is the payment vendor?: ");
-        Double userAmount = Double.parseDouble(Utils.promptGetUserInput("What is the payment amount?: "));
-
-        //Get and format the date and time
-        LocalDateTime dateTime = LocalDateTime.now();
-        DateTimeFormatter formattedDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
-        String logDateTime = dateTime.format(formattedDateTime);
+        String userDescription = Utils.promptGetUserInput("Enter the description: ");
+        String userVendor = Utils.promptGetUserInput("Enter the vendor: ");
+        Double userAmount = Double.parseDouble(Utils.promptGetUserInput("Enter the amount: "));
 
         try {
             FileWriter writer = new FileWriter(Utils.logFile, true);
-            writer.write("\n" + logDateTime + "|" + userDescription + "|" + userVendor + "|-" + userAmount);
-            writer.close();
 
-            System.out.printf("%s|%s|%s|-%.2f\n", logDateTime, userDescription, userVendor, userAmount);
-            System.out.println(Utils.ANSI_GREEN + "Success! Payment transaction logged!" + Utils.ANSI_RESET);
+            if (userChoice.equalsIgnoreCase("d")) {
+                writer.write("\n" + logDateTime + "|" + userDescription + "|" + userVendor + "|" + userAmount);
+                writer.close();
+                System.out.printf("%s|%s|%s|%.2f\n", logDateTime, userDescription, userVendor, userAmount);
+                System.out.println(Utils.ANSI_GREEN + "Success! Deposit transaction logged!" + Utils.ANSI_RESET);
+            } else if (userChoice.equalsIgnoreCase("p")) {
+                writer.write("\n" + logDateTime + "|" + userDescription + "|" + userVendor + "|-" + userAmount);
+                writer.close();
 
-            Utils.pauseApp();
+                System.out.printf("%s|%s|%s|-%.2f\n", logDateTime, userDescription, userVendor, -userAmount);
+                System.out.println(Utils.ANSI_GREEN + "Success! Payment transaction logged!" + Utils.ANSI_RESET);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
 
+        Utils.pauseApp();
+
+    }
 }
