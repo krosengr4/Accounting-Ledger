@@ -57,9 +57,4 @@ public class Transaction {
         this.amount = amount;
     }
     //endregion
-
-//    @Override
-//    public int compareTo(Transaction other) {
-//        return this.getLocalDateTime.compareTo(other.localDateTime);
-//    }
 }
