@@ -23,7 +23,7 @@ From the Ledger Screen a user can display all of their transactions, display onl
 From the Report Screen a user can display their transactions from the current month, the previous month, the current year, and the previous year. A user can also search a transaction by the name of the vendor. Lastly, a user can navigate back to the Ledger Screen, or navigate back to the Main Menu Screen.
 
 ## Images
-<<<<<<< HEAD
+
 #### Main Menu Screen
 ![img_2.png](AccountingLedger/images/mainMenu.png)
 #### Displaying all Transactions in Ledger Screen
@@ -48,7 +48,7 @@ There is no license for this application.
 
 ## Contributing
 ### Please contribute to this project:
-- [Submit Bugs and Request Features you'd like to see Implemented](https://github.com/krosengr4/capstone-1/issues)
+- [Submit Bugs and Request Features you'd like to see Implemented](https://github.com/krosengr4/Accounting-Ledger/issues)
 
 ## Questions
 - [Link to my GitHub Profile](https://github.com/krosengr4)
