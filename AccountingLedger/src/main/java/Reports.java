@@ -12,12 +12,12 @@ public class Reports {
 
         // This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
         while (ifContinue) {
-            System.out.println(Utils.ANSI_BLUE + "\n\t-----LEDGER REPORT-----" + Utils.ANSI_RESET);
+            System.out.println(Utils.BLUE + "\n\t-----LEDGER REPORT-----" + Utils.RESET);
 
             //Get user input
-            System.out.println(Utils.ANSI_YELLOW + "SORT REPORT BY:" + Utils.ANSI_RESET + "\n1 - Transactions this Month \n2 - Transactions last Month \n3 - Transactions this Year " +
+            System.out.println(Utils.YELLOW + "SORT REPORT BY:" + Utils.RESET + "\n1 - Transactions this Month \n2 - Transactions last Month \n3 - Transactions this Year " +
                     "\n4 - Transactions last Year \n5 - Search by Vendor \n0 - Go back to Ledger Screen \nH - Return to Main Menu");
-            userAction = Utils.promptGetUserInput(Utils.ANSI_YELLOW + "What would you like to do?: " + Utils.ANSI_RESET).toLowerCase();
+            userAction = Utils.getUserInput(Utils.YELLOW + "What would you like to do?: " + Utils.RESET).toLowerCase();
 
             // call correct method that follows users action input
             switch (userAction) {
@@ -34,10 +34,10 @@ public class Reports {
 
         //Print out Title based on user choice
         switch (userAction) {
-            case "1" -> System.out.println(Utils.ANSI_PURPLE + "\t\t---TRANSACTIONS THIS MONTH---" + Utils.ANSI_RESET);
-            case "2" -> System.out.println(Utils.ANSI_PURPLE + "\t\t---TRANSACTIONS LAST MONTH---" + Utils.ANSI_RESET);
-            case "3" -> System.out.println(Utils.ANSI_PURPLE + "\t\t---TRANSACTIONS THIS YEAR---" + Utils.ANSI_RESET);
-            case "4" -> System.out.println(Utils.ANSI_PURPLE + "\t\t---TRANSACTIONS LAST YEAR---" + Utils.ANSI_RESET);
+            case "1" -> System.out.println(Utils.PURPLE + "\t\t---TRANSACTIONS THIS MONTH---" + Utils.RESET);
+            case "2" -> System.out.println(Utils.PURPLE + "\t\t---TRANSACTIONS LAST MONTH---" + Utils.RESET);
+            case "3" -> System.out.println(Utils.PURPLE + "\t\t---TRANSACTIONS THIS YEAR---" + Utils.RESET);
+            case "4" -> System.out.println(Utils.PURPLE + "\t\t---TRANSACTIONS LAST YEAR---" + Utils.RESET);
         }
 
         //Call loadReportByDate method and get back ArrayList
@@ -45,7 +45,7 @@ public class Reports {
 
         //Sort and print out ledger ArrayList there are objects in the ArrayList
         if (transactionsList.isEmpty()) {
-            System.out.println(Utils.ANSI_RED + "There are currently no transactions." + Utils.ANSI_RESET);
+            System.out.println(Utils.RED + "There are currently no transactions." + Utils.RESET);
         } else {
             //Sort each object in the array list based on the date. Required newest first (2025 before 2024)
             transactionsList.sort(Comparator.comparing(Transaction::getDateTime).reversed());
@@ -56,13 +56,13 @@ public class Reports {
                 //Set the color of amount based on deposit(green) or payment(red)
                 String color = "";
                 if (t.getAmount() < 0) {
-                    color = Utils.ANSI_RED;
+                    color = Utils.RED;
                 } else {
                     if (t.getAmount() > 0) {
-                        color = Utils.ANSI_GREEN;
+                        color = Utils.GREEN;
                     }
                 }
-                System.out.printf("%s|%s|%s|%s|%s%.2f%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), color, t.getAmount(), Utils.ANSI_RESET);
+                System.out.printf("%s|%s|%s|%s|%s%.2f%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), color, t.getAmount(), Utils.RESET);
             }
             //Pause the app until user hits continue
             Utils.pauseApp();
@@ -153,7 +153,7 @@ public class Reports {
     private static void searchByVendor() {
 
         //Ask user for vendor to search
-        String userVendorSearch = Utils.promptGetUserInput(Utils.ANSI_YELLOW + "Enter the vendor you would like to search: " + Utils.ANSI_RESET);
+        String userVendorSearch = Utils.getUserInput(Utils.YELLOW + "Enter the vendor you would like to search: " + Utils.RESET);
 
         //Create ArrayList
         ArrayList<Transaction> transactionList = new ArrayList<>();
@@ -196,9 +196,9 @@ public class Reports {
 
         //Sort and print out ledger ArrayList there are objects in the ArrayList
         if (transactionList.isEmpty()) {
-            System.out.println(Utils.ANSI_RED + "\tThere are no transactions with " + userVendorSearch + Utils.ANSI_RESET);
+            System.out.println(Utils.RED + "\tThere are no transactions with " + userVendorSearch + Utils.RESET);
         } else {
-            System.out.println(Utils.ANSI_PURPLE + "\t---TRANSACTIONS WITH " + userVendorSearch.toUpperCase() + "---" + Utils.ANSI_RESET);
+            System.out.println(Utils.PURPLE + "\t---TRANSACTIONS WITH " + userVendorSearch.toUpperCase() + "---" + Utils.RESET);
 
             //Sort each object in the array list based on the date. Required newest first (2025 before 2024)
             transactionList.sort(Comparator.comparing(Transaction::getDate).reversed());
@@ -209,13 +209,13 @@ public class Reports {
                 //Set the color based on deposit(green) or payment(red)
                 String color = "";
                 if (t.getAmount() < 0) {
-                    color = Utils.ANSI_RED;
+                    color = Utils.RED;
                 } else {
                     if (t.getAmount() > 0) {
-                        color = Utils.ANSI_GREEN;
+                        color = Utils.GREEN;
                     }
                 }
-                System.out.printf("%s|%s|%s|%s|%s%.2f%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), color, t.getAmount(), Utils.ANSI_RESET);
+                System.out.printf("%s|%s|%s|%s|%s%.2f%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), color, t.getAmount(), Utils.RESET);
             }
         }
         //Pause the app until user hits continue

@@ -4,9 +4,9 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println(Utils.ANSI_BLUE + "\n\t\t--------------------WELCOME TO THE ACCOUNTING LEDGER!--------------------" + Utils.ANSI_RESET);
+        System.out.println(Utils.BLUE + "\n\t\t--------------------WELCOME TO THE ACCOUNTING LEDGER!--------------------" + Utils.RESET);
         displayHomeScreen();
-        System.out.println(Utils.ANSI_CYAN + "Thank you for using the Accounting Ledger!\n\tSee you soon :)" + Utils.ANSI_RESET);
+        System.out.println(Utils.CYAN + "Thank you for using the Accounting Ledger!\n\tSee you soon :)" + Utils.RESET);
     }
 
     public static void displayHomeScreen() {
@@ -16,10 +16,10 @@ public class Main {
         //This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
         while (ifContinue) {
 
-            System.out.println(Utils.ANSI_BLUE + "\n\t-----MAIN MENU-----" + Utils.ANSI_RESET);
+            System.out.println(Utils.BLUE + "\n\t-----MAIN MENU-----" + Utils.RESET);
             //Get user action input
-            System.out.println(Utils.ANSI_YELLOW + "Enter the letter associated with the desired action" + Utils.ANSI_RESET + "\nD - Add a deposit \nP - Make a payment(debit) \nL - Go to Ledger Screen \nX - Exit the Ledger Application");
-            userChoice = Utils.promptGetUserInput(Utils.ANSI_YELLOW + "What would you like to do?: " + Utils.ANSI_RESET).toLowerCase();
+            System.out.println(Utils.YELLOW + "Enter the letter associated with the desired action" + Utils.RESET + "\nD - Add a deposit \nP - Make a payment(debit) \nL - Go to Ledger Screen \nX - Exit the Ledger Application");
+            userChoice = Utils.getUserInput(Utils.YELLOW + "What would you like to do?: " + Utils.RESET).toLowerCase();
 
             // call correct method that follows users action input
             switch (userChoice) {
@@ -34,9 +34,9 @@ public class Main {
     private static void addTransaction(String userChoice) {
         String logDateTime = Utils.getFullDate();
 
-        String userDescription = Utils.promptGetUserInput("Enter the description: ");
-        String userVendor = Utils.promptGetUserInput("Enter the vendor: ");
-        Double userAmount = Double.parseDouble(Utils.promptGetUserInput("Enter the amount: "));
+        String userDescription = Utils.getUserInput("Enter the description: ");
+        String userVendor = Utils.getUserInput("Enter the vendor: ");
+        Double userAmount = Double.parseDouble(Utils.getUserInput("Enter the amount: "));
 
         try {
             FileWriter writer = new FileWriter(Utils.logFile, true);
@@ -45,13 +45,13 @@ public class Main {
                 writer.write("\n" + logDateTime + "|" + userDescription + "|" + userVendor + "|" + userAmount);
                 writer.close();
                 System.out.printf("%s|%s|%s|%.2f\n", logDateTime, userDescription, userVendor, userAmount);
-                System.out.println(Utils.ANSI_GREEN + "Success! Deposit transaction logged!" + Utils.ANSI_RESET);
+                System.out.println(Utils.GREEN + "Success! Deposit transaction logged!" + Utils.RESET);
             } else if (userChoice.equalsIgnoreCase("p")) {
                 writer.write("\n" + logDateTime + "|" + userDescription + "|" + userVendor + "|-" + userAmount);
                 writer.close();
 
                 System.out.printf("%s|%s|%s|-%.2f\n", logDateTime, userDescription, userVendor, -userAmount);
-                System.out.println(Utils.ANSI_GREEN + "Success! Payment transaction logged!" + Utils.ANSI_RESET);
+                System.out.println(Utils.GREEN + "Success! Payment transaction logged!" + Utils.RESET);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

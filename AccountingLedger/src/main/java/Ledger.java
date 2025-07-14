@@ -13,9 +13,9 @@ public class Ledger {
         //This while loop will continue with various options presented to the user.  It will terminate when the user inputs the option to exit.
         while (ifContinue) {
             //Get user input
-            System.out.println(Utils.ANSI_BLUE + "\n\t-----LEDGER-----" + Utils.ANSI_RESET);
-            System.out.println(Utils.ANSI_YELLOW + "OPTIONS:" + Utils.ANSI_RESET + "\nA - Display all entries \nD - Display deposits \nP - Display payments \nR - Go to Reports Screen \nH - Return to Main Menu");
-            userChoice = Utils.promptGetUserInput(Utils.ANSI_YELLOW + "What would you like to do?: ").toLowerCase();
+            System.out.println(Utils.BLUE + "\n\t-----LEDGER-----" + Utils.RESET);
+            System.out.println(Utils.YELLOW + "OPTIONS:" + Utils.RESET + "\nA - Display all entries \nD - Display deposits \nP - Display payments \nR - Go to Reports Screen \nH - Return to Main Menu");
+            userChoice = Utils.getUserInput(Utils.YELLOW + "What would you like to do?: ").toLowerCase();
 
             // call correct method that follows users action input
             switch (userChoice) {
@@ -37,9 +37,9 @@ public class Ledger {
 
         //Switch statement to print out correct title based on user choice
         switch (userChoice) {
-            case "a" -> System.out.println(Utils.ANSI_PURPLE + "\t\t---ALL TRANSACTIONS---" + Utils.ANSI_RESET);
-            case "d" -> System.out.println(Utils.ANSI_GREEN + "\t\t---ALL DEPOSITS---" + Utils.ANSI_RESET);
-            case "p" -> System.out.println(Utils.ANSI_RED + "\t\t---ALL PAYMENTS---" + Utils.ANSI_RESET);
+            case "a" -> System.out.println(Utils.PURPLE + "\t\t---ALL TRANSACTIONS---" + Utils.RESET);
+            case "d" -> System.out.println(Utils.GREEN + "\t\t---ALL DEPOSITS---" + Utils.RESET);
+            case "p" -> System.out.println(Utils.RED + "\t\t---ALL PAYMENTS---" + Utils.RESET);
         }
 
         //Calls loadLedger() method and gets back ArrayList
@@ -48,7 +48,7 @@ public class Ledger {
 
         //Sort and print out ledger ArrayList there are objects in the ArrayList
         if (transactionsList.isEmpty()) {
-            System.out.println(Utils.ANSI_RED + "There are currently no transactions." + Utils.ANSI_RESET);
+            System.out.println(Utils.RED + "There are currently no transactions." + Utils.RESET);
         } else {
             //Sort each object in the array list based on the date and time. Required newest first (2025 before 2024)
             transactionsList.sort(Comparator.comparing(Transaction::getDateTime).reversed());
@@ -59,14 +59,14 @@ public class Ledger {
                 //Set the color based on deposit(green) or payment(red)
                 String color = "";
                 if (t.getAmount() < 0) {
-                    color = Utils.ANSI_RED;
+                    color = Utils.RED;
                 } else {
                     if (t.getAmount() > 0) {
-                        color = Utils.ANSI_GREEN;
+                        color = Utils.RED;
                     }
                 }
 
-                System.out.printf("%s|%s|%s|%s|%s%.2f%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), color, t.getAmount(), Utils.ANSI_RESET);
+                System.out.printf("%s|%s|%s|%s|%s%.2f%s \n", t.getDate(), t.getTime(), t.getDescription(), t.getVendor(), color, t.getAmount(), Utils.RESET);
             }
             //Pause the app until user hits continue
             Utils.pauseApp();
