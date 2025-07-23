@@ -10,7 +10,9 @@ public interface TransactionDao {
 
 	Transaction getById(int transactionId);
 
-	List<Transaction> getByAmount(String lessOrGreater);
+	List<Transaction> getDeposits();
+
+	List<Transaction> getPayments();
 
 	List<Transaction> getByMonth(String minDate, String maxDate);
 

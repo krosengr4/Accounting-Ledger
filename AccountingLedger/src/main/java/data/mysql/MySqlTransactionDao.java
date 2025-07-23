@@ -65,14 +65,35 @@ public class MySqlTransactionDao extends MySqlBaseDao implements TransactionDao 
 	}
 
 	@Override
-	public List<Transaction> getByAmount(String lessOrGreater) {
+	public List<Transaction> getDeposits() {
 		List<Transaction> transactionList = new ArrayList<>();
 		String query = "SELECT * FROM transactions " +
-							   "WHERE amount ? 0;";
+							   "WHERE amount > 0;";
 
 		try(Connection connection = getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setString(1, lessOrGreater);
+
+			ResultSet results = statement.executeQuery();
+			while(results.next()) {
+				Transaction transaction = mapRow(results);
+				transactionList.add(transaction);
+			}
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+		return transactionList;
+	}
+
+	@Override
+	public List<Transaction> getPayments() {
+		List<Transaction> transactionList = new ArrayList<>();
+		String query = "SELECT * FROM transactions " +
+							   "WHERE amount < 0;";
+
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
 
 			ResultSet results = statement.executeQuery();
 			while(results.next()) {

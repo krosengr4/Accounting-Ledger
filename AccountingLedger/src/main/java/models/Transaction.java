@@ -118,5 +118,6 @@ public class Transaction {
 		System.out.println("Description: " + this.description);
 		System.out.println("Vendor: " + this.vendor);
 		System.out.println("Amount: " + amountColor + "$" + this.amount + Utils.RESET);
+		System.out.println("_______________________________________________________");
 	}
 }
