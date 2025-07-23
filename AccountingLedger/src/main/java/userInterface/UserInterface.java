@@ -1,3 +1,7 @@
+package userInterface;
+
+import utilities.Utils;
+
 public class UserInterface {
 
 	public int displayMainMenu() {

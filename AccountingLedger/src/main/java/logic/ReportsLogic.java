@@ -1,3 +1,9 @@
+package logic;
+
+import models.Transaction;
+import userInterface.UserInterface;
+import utilities.Utils;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -102,7 +108,7 @@ public class ReportsLogic {
 				int intCurrentMonth = Integer.parseInt(thisMonth);
 				int intCurrentYear = Integer.parseInt(thisYear);
 
-				//Create new instance of Transaction object with data from each line of file
+				//Create new instance of models.Transaction object with data from each line of file
 				Transaction newTransactions = new Transaction(date, time, description, vendor, amount);
 
 				//Add newTransactions object to ArrayList based on user request
@@ -174,7 +180,7 @@ public class ReportsLogic {
 				String vendor = lineData[3];
 				double amount = Double.parseDouble(lineData[4]);
 
-				//Create new instance of Transaction object with data from each line of file
+				//Create new instance of models.Transaction object with data from each line of file
 				Transaction newTransaction = new Transaction(date, time, description, vendor, amount);
 
 				//Add only the Transactions that match the vendor with user input

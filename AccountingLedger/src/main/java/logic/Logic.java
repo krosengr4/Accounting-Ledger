@@ -1,3 +1,8 @@
+package logic;
+
+import userInterface.UserInterface;
+import utilities.Utils;
+
 import java.io.FileWriter;
 import java.io.IOException;
 

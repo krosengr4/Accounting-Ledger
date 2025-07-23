@@ -1,3 +1,9 @@
+package logic;
+
+import models.Transaction;
+import userInterface.UserInterface;
+import utilities.Utils;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -86,7 +92,7 @@ public class LedgerLogic {
 					continue;
 				}
 
-				//Create new instance of Transaction object with data from each line of file
+				//Create new instance of models.Transaction object with data from each line of file
 				Transaction newTransaction = new Transaction(lineData[0], lineData[1], lineData[2], lineData[3], Double.parseDouble(lineData[4]));
 
 				//Add object to newTransaction ArrayList based on user request

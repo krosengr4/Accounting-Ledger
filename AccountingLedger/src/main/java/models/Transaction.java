@@ -1,6 +1,9 @@
+package models;
+
+import utilities.Utils;
+
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDateTime;
 
 public class Transaction {
     //declare variables for constructor
@@ -14,7 +17,7 @@ public class Transaction {
 
 	public Transaction() {}
 
-    //Constructor to create new Transaction (instances of)
+    //Constructor to create new models.Transaction (instances of)
     public Transaction(String date, String time, String description, String vendor, double amount) {
         this.date = date;
         this.time = time;
