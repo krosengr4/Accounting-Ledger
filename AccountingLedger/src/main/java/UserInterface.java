@@ -22,12 +22,11 @@ public class UserInterface {
 				2 - Display deposits
 				3 - Display payments
 				4 - Go to reports screen
-				5 - Go to the reports screen
 				
 				0 - Return to Main Menu
 				""");
 
-		return Utils.getUserInputIntMinMax(Utils.YELLOW + "Enter your option: ", 0, 5);
+		return Utils.getUserInputIntMinMax(Utils.YELLOW + "Enter your option: ", 0, 4);
 	}
 
 	public int displayReportsScreen() {
