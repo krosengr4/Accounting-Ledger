@@ -38,6 +38,14 @@ public class Transaction {
 		this.amount = amount;
 	}
 
+	public Transaction(LocalDate sqlDate, LocalTime sqlTime, String description, String vendor, double amount) {
+		this.sqlDate = sqlDate;
+		this.sqlTime = sqlTime;
+		this.description = description;
+		this.vendor = vendor;
+		this.amount = amount;
+	}
+
     //region Getters and Setters
     public String getDate() {
         return date;

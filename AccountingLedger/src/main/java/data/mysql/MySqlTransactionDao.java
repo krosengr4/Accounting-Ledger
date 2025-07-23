@@ -140,8 +140,8 @@ public class MySqlTransactionDao extends MySqlBaseDao implements TransactionDao 
 
 		try(Connection connection = getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-			statement.setTimestamp(1, Timestamp.valueOf(transaction.getDate()));
-			statement.setTimestamp(2, Timestamp.valueOf(transaction.getTime()));
+			statement.setDate(1, Date.valueOf(LocalDate.now()));
+			statement.setTime(2, Time.valueOf(LocalTime.now()));
 			statement.setString(3, transaction.getDescription());
 			statement.setString(4, transaction.getDescription());
 			statement.setDouble(5, transaction.getAmount());

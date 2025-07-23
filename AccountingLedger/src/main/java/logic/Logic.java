@@ -1,13 +1,22 @@
 package logic;
 
+import configurations.DatabaseConfig;
+import data.TransactionDao;
+import data.mysql.MySqlTransactionDao;
+import models.Transaction;
 import userInterface.UserInterface;
 import utilities.Utils;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Logic {
 
+	static TransactionDao transactionDao = new MySqlTransactionDao(DatabaseConfig.setDataSource());
 	static UserInterface ui = new UserInterface();
 
 	public static void processMainMenu() {
@@ -26,32 +35,16 @@ public class Logic {
 	}
 
 	private static void addTransaction(String userChoice) {
-		String logDateTime = Utils.getFullDate();
+		String description = Utils.getUserInput("Enter the description: ");
+		String vendor = Utils.getUserInput("Enter the vendor: ");
+		double amount = Utils.getUserInputDouble("Enter the amount: ");
 
-		String userDescription = Utils.getUserInput("Enter the description: ");
-		String userVendor = Utils.getUserInput("Enter the vendor: ");
-		Double userAmount = Double.parseDouble(Utils.getUserInput("Enter the amount: "));
-
-		try {
-			FileWriter writer = new FileWriter(Utils.logFile, true);
-
-			if (userChoice.equalsIgnoreCase("d")) {
-				writer.write("\n" + logDateTime + "|" + userDescription + "|" + userVendor + "|" + userAmount);
-				writer.close();
-				System.out.printf("%s|%s|%s|%.2f\n", logDateTime, userDescription, userVendor, userAmount);
-				System.out.println(Utils.GREEN + "Success! Deposit transaction logged!" + Utils.RESET);
-			} else if (userChoice.equalsIgnoreCase("p")) {
-				writer.write("\n" + logDateTime + "|" + userDescription + "|" + userVendor + "|-" + userAmount);
-				writer.close();
-
-				System.out.printf("%s|%s|%s|-%.2f\n", logDateTime, userDescription, userVendor, -userAmount);
-				System.out.println(Utils.GREEN + "Success! Payment transaction logged!" + Utils.RESET);
-			}
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+		if(userChoice.equalsIgnoreCase("p") && amount > 0) {
+			amount = -amount;
 		}
 
-		Utils.pauseApp();
+		Transaction transaction = new Transaction(LocalDate.now(), LocalTime.now(), description, vendor, amount);
+		Transaction addedTransaction =  transactionDao.addTransaction(transaction);
+		addedTransaction.print();
 	}
-
 }
