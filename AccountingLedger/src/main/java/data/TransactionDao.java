@@ -14,4 +14,6 @@ public interface TransactionDao {
 
 	List<Transaction> getByVendor(String vendor);
 
+	Transaction addTransaction(Transaction transaction);
+
 }

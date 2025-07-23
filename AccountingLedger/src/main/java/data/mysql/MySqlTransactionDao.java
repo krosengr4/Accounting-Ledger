@@ -42,6 +42,27 @@ public class MySqlTransactionDao extends MySqlBaseDao implements TransactionDao 
 		return transactionList;
 	}
 
+	public Transaction getById(int transactionId) {
+		String query = "SELECT * FROM transactions " +
+							   "WHERE transaction_id = ?;";
+
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, transactionId);
+
+			ResultSet result = statement.executeQuery();
+			if(result.next()) {
+				return mapRow(result);
+			} else {
+				System.out.println("Couldn't find transaction with that ID...");
+			}
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
 	@Override
 	public List<Transaction> getByAmount(String lessOrGreater) {
 		List<Transaction> transactionList = new ArrayList<>();
@@ -109,6 +130,38 @@ public class MySqlTransactionDao extends MySqlBaseDao implements TransactionDao 
 		}
 
 		return transactionList;
+	}
+
+	@Override
+	public Transaction addTransaction(Transaction transaction) {
+		String query = "INSERT INTO transactions (date, time, description, vendor, amount) " +
+							   "VALUES (?, ?, ?, ?, ?);";
+
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			statement.setTimestamp(1, Timestamp.valueOf(transaction.getDate()));
+			statement.setTimestamp(2, Timestamp.valueOf(transaction.getTime()));
+			statement.setString(3, transaction.getDescription());
+			statement.setString(4, transaction.getDescription());
+			statement.setDouble(5, transaction.getAmount());
+
+			int rows = statement.executeUpdate();
+			if(rows > 0) {
+				System.out.println("Success! The transaction was added!");
+				ResultSet key = statement.getGeneratedKeys();
+
+				if(key.next()) {
+					int transactionId = key.getInt(1);
+					return getById(transactionId);
+				}
+			} else {
+				System.err.println("ERROR! Could not add transaction!!!");
+			}
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
 	}
 
 	private Transaction mapRow(ResultSet result) throws SQLException {
