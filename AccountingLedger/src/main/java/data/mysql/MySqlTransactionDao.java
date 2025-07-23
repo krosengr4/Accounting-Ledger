@@ -6,9 +6,7 @@ import models.Transaction;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.sql.DataSource;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -26,7 +24,20 @@ public class MySqlTransactionDao extends MySqlBaseDao implements TransactionDao 
 	@Override
 	public List<Transaction> getAll() {
 		List<Transaction> transactionList = new ArrayList<>();
+		String query = "SELECT * FROM transactions;";
 
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
+
+			ResultSet results = statement.executeQuery();
+			while(results.next()) {
+				Transaction transaction = mapRow(results);
+				transactionList.add(transaction);
+			}
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
 
 		return transactionList;
 	}
