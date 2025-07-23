@@ -42,6 +42,7 @@ public class MySqlTransactionDao extends MySqlBaseDao implements TransactionDao 
 		return transactionList;
 	}
 
+	@Override
 	public Transaction getById(int transactionId) {
 		String query = "SELECT * FROM transactions " +
 							   "WHERE transaction_id = ?;";
