@@ -89,6 +89,27 @@ public class MySqlTransactionDao extends MySqlBaseDao implements TransactionDao 
 		return transactionList;
 	}
 
+	@Override
+	public List<Transaction> getByVendor(String vendor) {
+		List<Transaction> transactionList = new ArrayList<>();
+		String query = "SELECT * FROM transactions " +
+							   "WHERE vendor LIKE ?;";
+
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, "%" + vendor + "%");
+
+			ResultSet results = statement.executeQuery();
+			while(results.next()) {
+				transactionList.add(mapRow(results));
+			}
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+		return transactionList;
+	}
 
 	private Transaction mapRow(ResultSet result) throws SQLException {
 		int transactionId = result.getInt("transaction_id");
