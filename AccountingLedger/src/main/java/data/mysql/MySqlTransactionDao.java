@@ -8,7 +8,6 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,7 +111,8 @@ public class MySqlTransactionDao extends MySqlBaseDao implements TransactionDao 
 	public List<Transaction> getByMonth(String minDate, String maxDate) {
 		List<Transaction> transactionList = new ArrayList<>();
 		String query = "SELECT * FROM transactions " +
-							   "WHERE date BETWEEN '?' AND '?';";
+							   "WHERE date BETWEEN ? AND ?" +
+							   ";";
 
 		try(Connection connection = getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(query);

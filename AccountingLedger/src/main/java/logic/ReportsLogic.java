@@ -1,16 +1,25 @@
 package logic;
 
+import configurations.DatabaseConfig;
+import data.TransactionDao;
+import data.mysql.MySqlTransactionDao;
 import models.Transaction;
+import org.apache.commons.dbcp2.BasicDataSource;
 import userInterface.UserInterface;
 import utilities.Utils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class ReportsLogic {
 
+	static TransactionDao transactionDao = new MySqlTransactionDao(DatabaseConfig.setDataSource());
 	static UserInterface ui = new UserInterface();
 
 	public static int displayReportsScreen() {
@@ -21,12 +30,44 @@ public class ReportsLogic {
 			userChoice = ui.displayReportsScreen();
 
 			switch(userChoice) {
-				case 1, 2, 3, 4 -> displayReportByDate(userChoice);
+				case 1 -> processThisMonth();
 				case 5 -> searchByVendor();
 				case 6, 0 -> ifContinue = false;
 			}
 		}
 		return userChoice;
+	}
+
+	private static void processThisMonth() {
+		int year = LocalDate.now().getYear();
+		Month month = LocalDate.now().getMonth();
+		int intMonth = month.getValue();
+
+		String maxDay = "";
+		if(intMonth == 1 || intMonth == 3 || intMonth == 5 || intMonth == 7 || intMonth == 8 || intMonth == 10 || intMonth == 12) {
+			maxDay = "31";
+		} else if(intMonth == 4 || intMonth == 6 || intMonth == 9 || intMonth == 11) {
+			maxDay = "30";
+		} else {
+			//Not accounting for leap years
+			maxDay = "28";
+		}
+		String minDate = year + "-" + intMonth + "-" + "01";
+		String maxDate = year + "-" + intMonth + "-" + maxDay;
+
+		List<Transaction> transactionList = transactionDao.getByMonth(minDate, maxDate);
+		System.out.println(Utils.PURPLE + "\t\t---TRANSACTIONS THIS MONTH---" + Utils.RESET);
+		printData(transactionList);
+	}
+
+	private static void printData(List<Transaction> transactionList) {
+		if(transactionList.isEmpty()) {
+			System.out.println("There are no transactions for this month...");
+		} else {
+			for(Transaction transaction : transactionList) {
+				transaction.print();
+			}
+		}
 	}
 
 	public static void displayReportByDate(int userAction) {
