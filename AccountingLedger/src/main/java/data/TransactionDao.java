@@ -14,7 +14,7 @@ public interface TransactionDao {
 
 	List<Transaction> getPayments();
 
-	List<Transaction> getByMonth(String minDate, String maxDate);
+	List<Transaction> getByDate(String minDate, String maxDate);
 
 	List<Transaction> getByVendor(String vendor);
 

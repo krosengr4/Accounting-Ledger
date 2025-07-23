@@ -108,7 +108,7 @@ public class MySqlTransactionDao extends MySqlBaseDao implements TransactionDao 
 	}
 
 	@Override
-	public List<Transaction> getByMonth(String minDate, String maxDate) {
+	public List<Transaction> getByDate(String minDate, String maxDate) {
 		List<Transaction> transactionList = new ArrayList<>();
 		String query = "SELECT * FROM transactions " +
 							   "WHERE date BETWEEN ? AND ?" +
