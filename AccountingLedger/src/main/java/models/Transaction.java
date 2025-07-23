@@ -4,6 +4,8 @@ import utilities.Utils;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Transaction {
     //declare variables for constructor
@@ -12,8 +14,9 @@ public class Transaction {
     String description;
     String vendor;
     double amount;
-	Date sqlDate;
-	Time sqlTime;
+	int transactionId;
+	LocalDate sqlDate;
+	LocalTime sqlTime;
 
 	public Transaction() {}
 
@@ -26,7 +29,8 @@ public class Transaction {
         this.amount = amount;
     }
 
-	public Transaction(Date sqlDate, Time sqlTime, String description, String vendor, double amount) {
+	public Transaction(int transactionId, LocalDate sqlDate, LocalTime sqlTime, String description, String vendor, double amount) {
+		this.transactionId = transactionId;
 		this.sqlDate = sqlDate;
 		this.sqlTime = sqlTime;
 		this.description = description;
@@ -49,19 +53,19 @@ public class Transaction {
         this.time = time;
     }
 
-	public Time getSqlTime() {
+	public LocalTime getSqlTime() {
 		return sqlTime;
 	}
 
-	public void setSqlTime(Time sqlTime) {
+	public void setSqlTime(LocalTime sqlTime) {
 		this.sqlTime = sqlTime;
 	}
 
-	public Date getSqlDate() {
+	public LocalDate getSqlDate() {
 		return sqlDate;
 	}
 
-	public void setSqlDate(Date sqlDate) {
+	public void setSqlDate(LocalDate sqlDate) {
 		this.sqlDate = sqlDate;
 	}
 
