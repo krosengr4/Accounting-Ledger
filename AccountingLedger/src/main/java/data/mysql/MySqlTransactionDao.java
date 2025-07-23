@@ -42,6 +42,31 @@ public class MySqlTransactionDao extends MySqlBaseDao implements TransactionDao 
 		return transactionList;
 	}
 
+	@Override
+	public List<Transaction> getByMonth(String minDate, String maxDate) {
+		List<Transaction> transactionList = new ArrayList<>();
+		String query = "SELECT * FROM transactions " +
+							   "WHERE date BETWEEN '?' AND '?';";
+
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, minDate);
+			statement.setString(2, maxDate);
+
+			ResultSet results = statement.executeQuery();
+			while(results.next()) {
+				Transaction transaction = mapRow(results);
+				transactionList.add(transaction);
+			}
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+		return transactionList;
+	}
+
+
 	private Transaction mapRow(ResultSet result) throws SQLException {
 		int transactionId = result.getInt("transaction_id");
 		LocalDate date = result.getTimestamp("date").toLocalDateTime().toLocalDate();

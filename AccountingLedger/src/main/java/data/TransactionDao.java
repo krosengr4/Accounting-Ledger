@@ -8,6 +8,6 @@ public interface TransactionDao {
 
 	List<Transaction> getAll();
 
-	List<Transaction> getByMonth();
+	List<Transaction> getByMonth(String minDate, String maxDate);
 
 }
